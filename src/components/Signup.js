@@ -2,29 +2,25 @@ import { useState, useEffect, useContext } from "react";
 import { useUserContext } from "../context/UserContext";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
-import { Form, Button, Container, Alert } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 const useStyles = makeStyles({
   root: {},
   form: { marginTop: "2rem" },
-  button: {
-    marginBottom: "2rem",
-  },
 });
 
-export default function Signin(props) {
+export default function Signup(props) {
   const history = useHistory();
   const userContext = useUserContext();
   const classes = useStyles();
-  const [errorMessage, setErrorMessage] = useState(false);
 
   useEffect(() => {
     console.log("logging user context:" + JSON.stringify(userContext));
   }, [userContext]);
 
   const [formFields, setFormFields] = useState({
-    username: "nameone",
-    password: "password",
+    username: "user1",
+    password: "pass",
   });
 
   const handleChange = (e) => {
@@ -35,13 +31,27 @@ export default function Signin(props) {
     console.log("submit");
     e.preventDefault();
     console.log(userContext);
-    const user = formFields;
-    const result = await userContext.userSignIn(user);
-    console.log(result);
-    if (result === false) {
-      setErrorMessage(true);
+    const { username, password } = formFields;
+    const passwordValid = validatePassword(password);
+    const usernameValid = await validateUsername(username);
+
+    if (!usernameValid) {
+      console.log("invalid username");
+    } else if (!passwordValid) {
+      console.log("invalid password");
+    } else {
+      console.log(
+        "user signup with username: " + username + ". password: " + password
+      );
+      userContext.userSignUp(username, password);
     }
   };
+  function validatePassword(password) {
+    return true;
+  }
+  async function validateUsername(username) {
+    return true;
+  }
 
   return (
     <Container>
@@ -58,24 +68,29 @@ export default function Signin(props) {
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>password</Form.Label>
           <Form.Control
             value={formFields.password}
             onChange={handleChange}
             name="password"
             type="password"
-            placeholder="Password"
+            placeholder="password"
+          />
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>repeat password</Form.Label>
+          <Form.Control
+            value={formFields.password}
+            onChange={handleChange}
+            name="password"
+            type="password"
+            placeholder="password"
           />
         </Form.Group>
 
-        <Button className={classes.button} variant="primary" type="submit">
+        <Button variant="primary" type="submit">
           Submit
         </Button>
-        {errorMessage && (
-          <Alert variant={"danger"}>
-            Unable to login. Username or password are incorrect
-          </Alert>
-        )}
       </Form>
     </Container>
   );

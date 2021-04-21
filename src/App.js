@@ -1,46 +1,114 @@
-import React from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import {
   BrowserRouter,
-  Link,
+  Redirect,
   Route,
-  Switch,
-  useRouteMatch,
   useHistory,
-  useParams,
+  useRouteMatch,
+  useLocation,
 } from "react-router-dom";
+
+import Middleware from "./components/Middleware";
+import Signup from "./components/Signup";
 import Home from "./components/Home";
 import Signin from "./components/Signin";
+import Signout from "./components/Signout";
 import Profile from "./components/Profile";
+import NavComp from "./components/NavComp";
+import Entries from "./components/Entries";
+import Calendar from "./components/Calendar";
+import { useUserContext } from "./context/UserContext";
+import { makeStyles } from "@material-ui/styles";
+import { Container, Navbar } from "react-bootstrap";
 
+const useStyles = makeStyles({
+  loadingContainer: {
+    display: "flex",
+    justifyContent: "center",
+
+    "& h1": {
+      paddingTop: "2rem",
+    },
+  },
+});
 export default function App() {
+  const userContext = useUserContext();
+  const classes = useStyles();
   return (
     <BrowserRouter>
-      <Nav />
-      <Route exact path="/">
-        <Home />
-      </Route>
-      <Route path="/signin">
-        <Signin />
-      </Route>
-      <Route path="/profile">
-        <Profile />
-      </Route>
+      {console.log("rendering APP")}
+      <Middleware />
+      <NavComp />
+      <div>
+        {userContext.loading ? (
+          <div className={classes.loadingContainer}>
+            <h1 className={classes.loadingText}>Loading...</h1>
+          </div>
+        ) : (
+          <div>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            {/* <PrivateRoute path="/signin">
+              <Signin />
+            </PrivateRoute> */}
+            <Route path="/signin">
+              {!userContext.user ? (
+                <Signin />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/profile",
+                  }}
+                />
+              )}
+            </Route>
+
+            <Route path="/profile">
+              <Profile />
+            </Route>
+            <Route path="/signup">
+              <Signup />
+            </Route>
+            <Route path="/Calendar">
+              <Calendar />
+            </Route>
+            <Route path="/signout">
+              {userContext.user ? (
+                <Signout />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/",
+                  }}
+                />
+              )}
+
+              <Signout />
+            </Route>
+          </div>
+        )}
+      </div>
     </BrowserRouter>
   );
 }
-
-function Nav() {
+function PrivateRoute({ children, ...rest }) {
+  let auth = useUserContext();
   return (
-    <ul>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
-      <li>
-        <Link to="/signin">Signin</Link>
-      </li>
-      <li>
-        <Link to="/profile">Profile</Link>
-      </li>
-    </ul>
+    <Route
+      {...rest}
+      render={({ location }) =>
+        !auth.user ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/profile",
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
   );
 }
