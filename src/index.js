@@ -4,11 +4,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import UserProvider from "./context/UserProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
+import LoadingComponent from "./components/LoadingComponent";
 
 ReactDOM.render(
   <React.StrictMode>
     <UserProvider>
       <App />
+      <LoadingComponent />
     </UserProvider>
   </React.StrictMode>,
   document.getElementById("root")

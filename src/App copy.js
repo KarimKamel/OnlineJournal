@@ -7,9 +7,11 @@ import {
   useRouteMatch,
   useLocation,
 } from "react-router-dom";
-import "./App.css";
 
-import Middleware from "./components/Middleware";
+import Middleware from "./components/Middleware copy";
+import { usePromiseTracker } from "react-promise-tracker";
+import LoadingComponent from "./components/LoadingComponent";
+
 import Signup from "./components/Signup";
 import Home from "./components/Home";
 import Signin from "./components/Signin";
@@ -17,97 +19,92 @@ import Signout from "./components/Signout";
 import Profile from "./components/Profile";
 import NavComp from "./components/NavComp";
 import Entries from "./components/Entries";
-import Calendar from "./components/Calendar copy";
+import Calendar from "./components/Calendar";
 import { useUserContext } from "./context/UserContext";
 import { makeStyles } from "@material-ui/styles";
 import { Container, Navbar } from "react-bootstrap";
-import classNames from "classnames";
 
 const useStyles = makeStyles({
-  loadingContainerShow: {
+  loadingContainer: {
     display: "flex",
     justifyContent: "center",
-    opacity: 1,
-    transition: "opacity 2s",
 
     "& h1": {
       paddingTop: "2rem",
     },
   },
-  loadingContainerHide: {
-    opacity: 0,
-  },
-  pulse: {
-    animation: "$pulse 5s infinite",
-  },
-  "@keyframes pulse": {
-    "0%": {
-      // Color: "#001F3F",
-      color: "#001F3F",
-    },
-    "50%": {
-      // Color: "#FF4136",
-      color: "#FF4136",
-    },
-    "100%": {
-      // Color: "#FF4136",
-      color: "#001F3F",
-    },
-  },
 });
 export default function App() {
+  const { promiseInProgress } = usePromiseTracker();
+
   const userContext = useUserContext();
   const classes = useStyles();
-  const class1 = classes.loadingContainerShow;
-  const class2 = classes.loadingContainerHide;
-  var loadingClass = classNames({
-    "alert-enter-active": true,
-    "alert-exit-active": !userContext.loading,
-  });
-  var loading2Class = classNames({
-    [classes.loadingContainerShow]: true,
-    [classes.pulse]: true,
-    [classes.loadingContainerHide]: !userContext.loading,
-  });
-  var contentClass = classNames({
-    "alert-enter": true,
-    "alert-enter-active": !userContext.loading,
-  });
+  const [loading, setLoading] = useState(false);
+
   return (
     <BrowserRouter>
       {console.log("rendering APP")}
-      {console.log("user is set to:" + userContext.user)}
-      {/* {(userContext.loading = true)} */}
-      <Middleware />
-      {/* {(userContext.loading = false)} */}
-
-      <NavComp />
-
+      <Middleware setLoading={setLoading} />
       <div>
-        <div className={loading2Class}>
-          <h1 className={classes.loadingText}>Loading...</h1>
-        </div>
-        <div className={contentClass}>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <PrivateRoute path="/signin">
-            <Signin />
-          </PrivateRoute>
+        {promiseInProgress ? (
+          <div className={classes.loadingContainer}>
+            {console.log("display loading")}
+            <h1 className={classes.loadingText}>Loading...</h1>
+          </div>
+        ) : (
+          <div>
+            {console.log("remove loading")}
+            <NavComp />
 
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/signup">
-            <Signup />
-          </Route>
-          <Route path="/Calendar">
-            <Calendar />
-          </Route>
-          <Route path="/signout">
-            <Signout />
-          </Route>
-        </div>
+            <Route exact path="/">
+              <Home />
+            </Route>
+
+            {/* <PrivateRoute path="/signin">
+              <Signin />
+            </PrivateRoute> */}
+            <Route path="/signin">
+              {!userContext.user ? (
+                <Signin />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/profile",
+                  }}
+                />
+              )}
+            </Route>
+
+            <Route path="/profile">
+              {userContext.user ? (
+                <Profile />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/",
+                  }}
+                />
+              )}
+            </Route>
+            <Route path="/signup">
+              <Signup />
+            </Route>
+            <Route path="/Calendar">
+              <Calendar />
+            </Route>
+            <Route path="/signout">
+              {userContext.user ? (
+                <Signout />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/",
+                  }}
+                />
+              )}
+            </Route>
+          </div>
+        )}
       </div>
     </BrowserRouter>
   );

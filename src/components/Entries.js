@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import dateFormat from "dateformat";
 import {
   Link,
@@ -12,13 +12,44 @@ import DisplayEntry from "./DisplayEntry";
 import NewEntry from "./NewEntry";
 import { useUserContext } from "../context/UserContext";
 import { getEntries } from "../api/entriesApi";
-import { Card, Button, Container } from "react-bootstrap";
+import { Card, Button, Container, Spinner } from "react-bootstrap";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
-  title: { marginTop: "2rem" },
+  headerContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: "2rem",
+  },
   linkContainer: { textAlign: "end" },
   card: { marginTop: "2rem" },
+  cardText: {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
+  spinnerContainer: {
+    display: "flex",
+    paddingTop: "20vh",
+    justifyContent: "center",
+  },
+  spinner: {
+    width: "5rem",
+    height: "5rem",
+  },
+
+  noEntriesMessageContainer: {
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: "4rem",
+    border: "2px solid black",
+    marginTop: "6rem",
+    paddingBottom: "4rem",
+    alignItems: "center",
+    background: "lightsteelblue",
+    borderRadius: "5px",
+  },
 });
 
 function strip(html) {
@@ -50,7 +81,7 @@ export default function Entries(props) {
   const [entries, setEntries] = useState([]);
   const classes = useStyles();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     console.log("use effect entries");
     async function loadEntries() {
       setLoading(true);
@@ -69,6 +100,25 @@ export default function Entries(props) {
       }
     }
   }, []);
+  // useEffect(() => {
+  //   console.log("use effect entries");
+  //   async function loadEntries() {
+  //     setLoading(true);
+
+  //     const entries = await getEntries(userContext.user, date);
+  //     setLoading(false);
+
+  //     setEntries(entries);
+  //   }
+  //   if (isExact) {
+  //     console.log("loading entries");
+  //     try {
+  //       loadEntries();
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // }, []);
 
   // const date = new Date();
 
@@ -84,26 +134,43 @@ export default function Entries(props) {
       <Route path={`${path}`}>
         <Container>
           {console.log("entries root")}
-          {isExact && (
-            <h1 className={classes.title}>entries created on {displayDate}</h1>
-          )}
-          <Link
-            to={{
-              pathname: `${path}/create-entry`,
-              new: true,
-              search: date,
-            }}
-          >
-            <Button variant="primary">create new entry</Button>
-          </Link>{" "}
+
+          <div className={classes.headerContainer}>
+            <h1 className={classes.title}>
+              <em>
+                <i>{displayDate}</i>
+              </em>
+            </h1>
+            <Link
+              to={{
+                pathname: `${path}/create-entry`,
+                new: true,
+                search: date,
+              }}
+            >
+              <Button variant="dark">create new entry</Button>
+            </Link>{" "}
+          </div>
+
           {loading ? (
-            <h1>loading entries</h1>
-          ) : (
+            <div className={classes.spinnerContainer}>
+              {" "}
+              <Spinner
+                animation="border"
+                className={classes.spinner}
+                role="status"
+              >
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+            </div>
+          ) : entries.length > 0 ? (
             entries.map((entry, id) => (
               <Card key={id} className={classes.card}>
                 <Card.Body>
                   <Card.Title>{entry.title} </Card.Title>
-                  <Card.Text>{strip(entry.data)}</Card.Text>
+                  <Card.Text className={classes.cardText}>
+                    {strip(entry.data)}
+                  </Card.Text>
                   <div className={classes.linkContainer}>
                     <button
                       onClick={() => {
@@ -122,6 +189,10 @@ export default function Entries(props) {
                 </Card.Body>
               </Card>
             ))
+          ) : (
+            <div className={classes.noEntriesMessageContainer}>
+              <h1>No entries made on this date</h1>
+            </div>
           )}
         </Container>
       </Route>

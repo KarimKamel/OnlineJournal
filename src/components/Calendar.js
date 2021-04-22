@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactCalendar from "react-calendar";
 import { Container } from "react-bootstrap";
+import "./Calendar.css";
 import {
   Link,
   useRouteMatch,
@@ -16,6 +17,7 @@ import dateFormat from "dateformat";
 
 const useStyles = makeStyles({
   calendar: { marginTop: "2rem" },
+  button: { border: " 5px solid gray" },
 });
 
 export default function Calendar() {
@@ -28,7 +30,7 @@ export default function Calendar() {
 
   return (
     <Switch>
-      {console.log(path)}
+      {console.log("rendering calendar")}
       <Route path={`${path}/Entries`}>
         <Entries />
       </Route>
@@ -37,7 +39,7 @@ export default function Calendar() {
           <ReactCalendar
             className={classes.calendar}
             onChange={onDateChange}
-            // value={date}
+            value={date}
             onClickDay={(date) => {
               history.push({
                 pathname: `${path}/Entries`,

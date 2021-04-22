@@ -1,5 +1,7 @@
 import { signin, checkAndRefreshAuth, signout, signup } from "../api/authApi";
 import { useState } from "react";
+import { trackPromise } from "react-promise-tracker";
+
 export default function useUserProvider() {
   const [user, setUser] = useState("");
   const [loading, setLoading] = useState(false);
@@ -47,14 +49,23 @@ export default function useUserProvider() {
       }
     });
   }
-  function userSignOut(user) {
-    signout().then((res) => {
-      if (res.status === 200) {
-        console.log("user signout successfull");
-        setUser("");
-      }
-    });
+  async function userSignOut() {
+    const res = await signout();
+    if (res.status === 200) {
+      setUser("");
+      console.log("user removed from context");
+
+      return res;
+    }
   }
+  // function userSignOut(user) {
+  //   signout().then((res) => {
+  //     if (res.status === 200) {
+  //       console.log("user signout successfull");
+  //       setUser("");
+  //     }
+  //   });
+  // }
   // function userCheckAndRefreshAuth() {
   //   console.log("setting loading to true");
   //   checkAndRefreshAuth().then((username) => {
@@ -71,8 +82,8 @@ export default function useUserProvider() {
     const username = await checkAndRefreshAuth();
     console.log("check and refresh returned: " + username);
     if (username) {
-      console.log("setting user" + username);
       setUser(username);
+      console.log("setting user in context" + username);
     }
     return;
     // console.log("setting loading to false");

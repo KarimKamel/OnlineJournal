@@ -54,7 +54,7 @@ export default function NewEntry(props) {
       const res = await saveEntry(entryData);
       if (res.status === 200) {
         setSuccessMessage(true);
-        setTimeout(() => history.push("/"), 1000);
+        setTimeout(() => history.goBack(), 1000);
       }
     }
     saveEntryWrapper(entryData);
@@ -85,6 +85,7 @@ export default function NewEntry(props) {
             setData={(data) => setData(data)}
           />
           <Button
+            variant="dark mt-2"
             className={classes.buttonSave}
             onClick={() => handleSubmit(data)}
           >

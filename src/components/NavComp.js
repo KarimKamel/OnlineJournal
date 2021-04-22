@@ -45,7 +45,9 @@ export default function NavComp(props) {
     <Navbar bg="light" expand="sm">
       {console.log("rendering nav")}
 
-      <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+      <Navbar.Brand>
+        <b>My Online Journal</b>
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
@@ -61,9 +63,15 @@ export default function NavComp(props) {
               <Link className="nav-link" to="/profile">
                 Profile
               </Link>
-              <Link className="nav-link" to="/signout">
+              {/* <Link className="nav-link" to="/signout">
                 Signout
-              </Link>
+              </Link> */}
+              <button
+                className={`${classes.signoutButton} nav-link`}
+                onClick={() => userContext.userSignOut()}
+              >
+                Signout
+              </button>
             </>
           ) : (
             <>
@@ -99,5 +107,9 @@ const useStyles = makeStyles({
     "&:hover": {
       color: "black",
     },
+  },
+  signoutButton: {
+    borderStyle: "none",
+    backgroundColor: "inherit",
   },
 });

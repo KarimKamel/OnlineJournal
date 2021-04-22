@@ -1,3 +1,5 @@
+import { trackPromise } from "react-promise-tracker";
+
 async function checkAuth() {
   const response = await fetch("http://localhost:3001/users/auth", {
     method: "GET",

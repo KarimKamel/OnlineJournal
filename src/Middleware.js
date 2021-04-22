@@ -1,24 +1,33 @@
 import { useLocation } from "react-router-dom";
-import { useLayoutEffect, useEffect, useState } from "react";
+import { useLayoutEffect, useState, useEffect } from "react";
 import { useUserContext } from "../context/UserContext";
 
-export default function Middleware({ setLoading }) {
+export default function Middleware(props) {
   const location = useLocation();
 
   const userContext = useUserContext();
 
   useEffect(() => {
     async function checkTokenValidity() {
-      // setLoading(true);
+      userContext.setLoading(true);
       console.log("loading set to true");
       console.log("###########################");
       await userContext.userCheckAndRefreshAuth();
-      // setLoading(false);
+      userContext.setLoading(false);
       console.log("loading set to false");
       console.log("###########################");
     }
     checkTokenValidity();
   }, [location.pathname]);
 
-  return <div>{console.log("rendering middleware")}</div>;
+  const myStyle = {
+    backgroundColor: "blue",
+  };
+
+  return (
+    <div style={myStyle}>
+      {console.log("rendering middleware")}
+      {userContext.loading && <h1>middleware</h1>}
+    </div>
+  );
 }

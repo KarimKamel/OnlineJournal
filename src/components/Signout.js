@@ -5,10 +5,13 @@ export default function Signout() {
   const userContext = useUserContext();
 
   useEffect(() => {
-    console.log("calling signout");
-    userContext.userSignOut();
-    console.log("after user signout");
-  }, [userContext]);
+    async function signoutWrapper() {
+      console.log("calling signout");
+      const res = await userContext.userSignOut();
+      console.log("after user signout, status = " + res.status);
+    }
+    signoutWrapper();
+  }, []);
 
   return <div>{console.log("render signout")}</div>;
 }

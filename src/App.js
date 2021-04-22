@@ -7,6 +7,7 @@ import {
   useRouteMatch,
   useLocation,
 } from "react-router-dom";
+import { trackPromise } from "react-promise-tracker";
 
 import Middleware from "./components/Middleware";
 import Signup from "./components/Signup";
@@ -34,21 +35,26 @@ const useStyles = makeStyles({
 export default function App() {
   const userContext = useUserContext();
   const classes = useStyles();
+
   return (
     <BrowserRouter>
       {console.log("rendering APP")}
       <Middleware />
-      <NavComp />
       <div>
         {userContext.loading ? (
           <div className={classes.loadingContainer}>
+            {console.log("display loading")}
             <h1 className={classes.loadingText}>Loading...</h1>
           </div>
         ) : (
           <div>
+            {console.log("remove loading")}
+            <NavComp />
+
             <Route exact path="/">
               <Home />
             </Route>
+
             {/* <PrivateRoute path="/signin">
               <Signin />
             </PrivateRoute> */}
@@ -65,7 +71,15 @@ export default function App() {
             </Route>
 
             <Route path="/profile">
-              <Profile />
+              {userContext.user ? (
+                <Profile />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/",
+                  }}
+                />
+              )}
             </Route>
             <Route path="/signup">
               <Signup />
@@ -83,8 +97,6 @@ export default function App() {
                   }}
                 />
               )}
-
-              <Signout />
             </Route>
           </div>
         )}

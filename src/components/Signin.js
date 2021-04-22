@@ -45,6 +45,7 @@ export default function Signin(props) {
 
   return (
     <Container>
+      {console.log("rendering sign in")}
       <Form className={classes.form} onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>username</Form.Label>

@@ -145,6 +145,7 @@ export default function DisplayEntry(props) {
 
               {editMode ? (
                 <Button
+                  variant={"dark mt-2"}
                   className={classes.buttonSave}
                   onClick={() => handleSubmit()}
                 >
