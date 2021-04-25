@@ -94,6 +94,31 @@ async function signup(data) {
 
     body: JSON.stringify(data), // body data type must match "Content-Type" header
   });
+  console.log("authAPI signup response");
+  console.log(response);
   return response; // parses JSON response into native JavaScript objects
 }
-export { checkAuth, refreshAuth, signin, signout, signup, checkAndRefreshAuth };
+async function googleSignin(accessTokenObj) {
+  const res = await fetch("http://localhost:3001/users/google/signin", {
+    method: "POST",
+    withCredentials: true,
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: JSON.stringify(accessTokenObj),
+    // body: accessToken,
+  });
+  return res;
+}
+
+export {
+  checkAuth,
+  refreshAuth,
+  signin,
+  signout,
+  signup,
+  checkAndRefreshAuth,
+  googleSignin,
+};

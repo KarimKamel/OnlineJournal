@@ -82,7 +82,15 @@ export default function App() {
               )}
             </Route>
             <Route path="/signup">
-              <Signup />
+              {!userContext.user ? (
+                <Signup />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/profile",
+                  }}
+                />
+              )}
             </Route>
             <Route path="/Calendar">
               <Calendar />

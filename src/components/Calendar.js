@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import ReactCalendar from "react-calendar";
 import { Container } from "react-bootstrap";
-import "./Calendar.css";
+// import "./Calendar.css";
+import "react-calendar/dist/Calendar.css";
+
 import {
   Link,
   useRouteMatch,
@@ -16,7 +18,14 @@ import { makeStyles } from "@material-ui/styles";
 import dateFormat from "dateformat";
 
 const useStyles = makeStyles({
-  calendar: { marginTop: "2rem" },
+  calendar: {
+    marginTop: "2rem",
+    width: "100%",
+    "& .react-calendar__tile--active": {
+      background: "black",
+    },
+  },
+
   button: { border: " 5px solid gray" },
 });
 
