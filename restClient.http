@@ -1,60 +1,22 @@
-POST http://localhost:3001/users/signup HTTP/1.1
-content-type: application/json
-
-
-{
-    "username": "namethree",
-    "password": "password"
-}
-
-########################################
-
-
-GET  http://localhost:3001/entries?date=12-12-2012 HTTP/1.1
-content-type: application/json
-
-
-{
-    
-    "date": "Wed, 14 Apr 2021"
-
-    
-}
-
-
-#####################################
-GET  http://localhost:3001/entries?date=4-15-2021&username=user1 HTTP/1.1
-content-type: application/json
-
-
-{
-    
-    "date": "Wed, 14 Apr 2021"
-
-    
-}
 
 ######################
 
-post  http://localhost:3001/auth/google/verify HTTP/1.1
+PATCH   http://localhost:3001/users/user HTTP/1.1
 content-type: application/json
 
 
 {
     
-    "date": "Wed, 14 Apr 2021"
+    "email": "user@mail.com",
+    "name": "newman",
+    "hobbies": "playing games"
 
     
 }
 ######################
 
-get  http://localhost:3001/auth/google HTTP/1.1
+get   http://localhost:3001/users/user HTTP/1.1
 content-type: application/json
 
 
-{
-    
-    "date": "Wed, 14 Apr 2021"
 
-    
-}

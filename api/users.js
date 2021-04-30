@@ -82,14 +82,36 @@ router.post("/signup", async (req, res) => {
   newUser.save((err, user) => {
     if (err) {
       console.log(err);
-      res.status(500).send();
+      if (err.code === 11000)
+        res.status(403).json({ message: "username is taken" });
     } else {
       console.log("user created:" + user);
-      res.status(200).send();
+      res.status(200).send({ username: user.username });
     }
   });
 });
 
+router.patch("/:username", async (req, res) => {
+  try {
+    const username = req.params;
+    const user = await User.findOne(username);
+    const { name, email, hobbies } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      user._id,
+      {
+        name,
+        email,
+        hobbies,
+      },
+      { new: true }
+    );
+    console.log(updatedUser);
+    return res.status(200).json(updatedUser);
+  } catch (err) {
+    console.log(err);
+    return res.status(401).end();
+  }
+});
 router.post("/signin", async (req, res) => {
   console.log("sign in");
   const user = req.body;
@@ -101,6 +123,9 @@ router.post("/signin", async (req, res) => {
 
     req.session.refreshToken = refreshToken;
     req.session.accessToken = accessToken;
+    if (user.remember) {
+      req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 365;
+    }
 
     res.status(200).end();
   } else {
@@ -125,9 +150,8 @@ router.get("/refreshToken", (req, res) => {
 router.get("/auth", async (req, res) => {
   console.log("auth get");
   const { refreshToken, accessToken } = req.session;
-  console.log(
-    "received access and refresh," + accessToken + " " + refreshToken
-  );
+  console.log("received access token: " + accessToken);
+  console.log("received refresh token: " + refreshToken);
   try {
     const accessUser = jwt.verify(accessToken, process.env.ACCESS_SECRET);
     console.log("access token valid");
@@ -167,6 +191,17 @@ router.get("/profile", (req, res) => {
     } else {
       res.status(403).end(err.message);
     }
+  }
+});
+router.get("/:username", async (req, res) => {
+  console.log("getting user details");
+  try {
+    const username = req.params;
+    const user = await User.findOne(username);
+    user.password = "";
+    return res.status(200).json(user);
+  } catch (err) {
+    return res.status(401).end();
   }
 });
 

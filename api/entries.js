@@ -4,65 +4,108 @@ const Entry = require("../models/entries");
 const User = require("../models/User");
 const dateFormat = require("dateformat");
 
+function isValidDate(date) {
+  return date.getTime() === date.getTime();
+}
+
 router.get("/date/:date/username/:username", async (req, res) => {
   console.log("get entries by username and date");
   const { date, username } = req.params;
   try {
-    // const user = await User.findOne({ username });
-    // const userId = user._id;
-    // console.log(userId);
-    const currentDate = new Date(date).setHours(0, 0, 0, 0);
-    const dayInMS = 1000 * 60 * 60 * 24;
-    const nextDayDate = currentDate + dayInMS;
-
-    console.log("current date " + dateFormat(currentDate));
-    console.log("next day date " + dateFormat(nextDayDate));
-
     const user = await User.findOne({ username });
+    const currentDate = new Date(date);
 
-    const entries = await Entry.find({
-      date: { $gte: currentDate, $lt: nextDayDate },
-      userId: user._id,
-    });
-    console.log(entries);
-    res.json(entries);
+    if (isValidDate(currentDate)) {
+      currentDate.setHours(0, 0, 0, 0);
+      const dayInMS = 1000 * 60 * 60 * 24;
+      const nextDayDate = currentDate + dayInMS;
+      console.log("current date " + dateFormat(currentDate));
+      console.log("next day date " + dateFormat(nextDayDate));
+
+      const entries = await Entry.find({
+        date: { $gte: currentDate, $lt: nextDayDate },
+        userId: user._id,
+      });
+      console.log(entries);
+      res.json(entries);
+    } else {
+      const entries = await Entry.find({
+        userId: user._id,
+      });
+      console.log(entries);
+      res.json(entries);
+    }
   } catch (err) {
     console.log(err);
   }
 });
+
+router.get("/count", async (req, res) => {
+  const { username } = req.query;
+  const user = await User.findOne({ username });
+  const entriesCount = await Entry.find({
+    userId: user._id,
+  }).count();
+  res.json(entriesCount);
+});
 router.get("/", async (req, res) => {
   console.log("get entries by username and date");
-  const { date, username } = req.query;
+  const { date, username, amount, order } = req.query;
+  console.log("get entry date:", date);
+  const firstEntry = amount * (order - 1);
+  const lastEntry = amount * order;
+
   try {
-    const currentDate = new Date(date).setHours(0, 0, 0, 0);
-    const dayInMS = 1000 * 60 * 60 * 24;
-    const nextDayDate = currentDate + dayInMS;
-
-    console.log("current date " + dateFormat(currentDate));
-    console.log("next day date " + dateFormat(nextDayDate));
-
     const user = await User.findOne({ username });
+    const minDate = new Date(date);
+    minDate.setHours(0, 0, 0, 0);
 
-    const entries = await Entry.find({
-      date: { $gte: currentDate, $lt: nextDayDate },
-      userId: user._id,
-    });
-    console.log(entries);
-    res.json(entries);
+    if (isValidDate(minDate)) {
+      const maxDate = new Date();
+      maxDate.setDate(minDate.getDate() + 1);
+
+      console.log("current date " + minDate);
+      console.log("next day  date " + maxDate);
+
+      const user = await User.findOne({ username });
+
+      const entries = await Entry.find({
+        date: { $gte: minDate, $lt: maxDate },
+        userId: user._id,
+      });
+      console.log(entries);
+      res.json(entries);
+    } else {
+      const entries = await Entry.find({
+        userId: user._id,
+      });
+      console.log(entries);
+      console.log(entries.slice(firstEntry, lastEntry));
+      res.json(entries.slice(firstEntry, lastEntry));
+    }
   } catch (err) {
     console.log(err);
   }
 });
 router.post("/", async (req, res) => {
   console.log("in post entry");
-  const { date, data, username, title } = req.body.data;
-  console.log("entry Data: " + req.body);
+  const { date, data, username, title, createdAt } = req.body.data;
+  console.log("save entry date:", date);
   const user = await User.findOne({ username });
   console.log(user);
-  const newEntry = new Entry({ date, data, userId: user._id, title });
+  const newEntry = new Entry({
+    date,
+    data,
+    userId: user._id,
+    title,
+    createdAt,
+  });
   newEntry.save((err, doc) => {
     if (err) return console.log(err);
-    else res.send(doc);
+    else {
+      console.log("date saved as ", doc.date);
+      res.send(doc);
+    }
   });
 });
 

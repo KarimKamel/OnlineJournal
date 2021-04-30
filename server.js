@@ -36,6 +36,7 @@ const usersRouter = require("./api/users");
 // const authRouter = require("./api/auth");
 app.use("/entries", entriesRouter);
 app.use("/users", usersRouter);
+app.get("/", (req, res) => res.send("home"));
 // app.use("/auth", authRouter);
 
 const port = process.env.PORT;
