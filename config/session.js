@@ -4,6 +4,7 @@ mongoStore = MongoStore.create({
 });
 
 function configSession(session) {
+  console.log("configuring session");
   return session({
     secret: process.env.SESSION_SECRET,
     resave: false,
