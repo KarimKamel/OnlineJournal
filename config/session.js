@@ -13,11 +13,12 @@ function configSession(session) {
     cookie: {
       secure: false,
       httpOnly: true,
-      store: MongoStore.create({
-        mongoUrl: process.env.MONGO_CONNECTION_STRING,
-      }),
+
       // maxAge: 1000 * 60 * 60 * 24 * 365,
     },
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_CONNECTION_STRING,
+    }),
   });
 }
 module.exports = configSession;
