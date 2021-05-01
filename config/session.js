@@ -13,6 +13,7 @@ function configSession() {
     cookie: {
       secure: false,
       httpOnly: true,
+      sameSite: "none",
 
       // maxAge: 1000 * 60 * 60 * 24 * 365,
     },

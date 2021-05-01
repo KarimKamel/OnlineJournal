@@ -10,7 +10,6 @@ console.log("env", process.env.NODE_ENV);
 require("./config/passport")(passport);
 require("./config/db")(mongoose);
 const sessionConfiguration = require("./config/session");
-console.log("session", sessionConfiguration);
 
 const app = express();
 
