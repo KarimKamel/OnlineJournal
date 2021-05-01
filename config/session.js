@@ -3,9 +3,9 @@ mongoStore = MongoStore.create({
   mongoUrl: process.env.MONGO_CONNECTION_STRING,
 });
 
-function configSession(session) {
+function configSession() {
   console.log("configuring session");
-  return session({
+  return (config = {
     secret: process.env.SESSION_SECRET,
     resave: false,
 
@@ -21,4 +21,5 @@ function configSession(session) {
     }),
   });
 }
-module.exports = configSession;
+
+module.exports = configSession();

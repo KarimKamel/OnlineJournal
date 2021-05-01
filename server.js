@@ -9,8 +9,8 @@ console.log("env", process.env.NODE_ENV);
 
 require("./config/passport")(passport);
 require("./config/db")(mongoose);
-const sessionMiddleware = require("./config/session")(session);
-console.log("session", sessionMiddleware);
+const sessionConfiguration = require("./config/session");
+console.log("session", sessionConfiguration);
 
 const app = express();
 
@@ -20,21 +20,13 @@ app.use(passport.session());
 
 app.use(require("cookie-parser")());
 app.use(require("morgan")("combined"));
-// if (process.env.NODE_ENV === "production") {
-if (process.env.NODE_ENV) {
-  console.log("setting cookie to secure");
-  sessionMiddleware.cookie.secure = true;
+if (process.env.NODE_ENV === "production") {
+  sessionConfiguration.cookie.secure = true;
+  console.log("secure cookie set to true");
 }
-app.use(sessionMiddleware);
-// app.use(
-//   session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: { secure: false, httpOnly: true },
-//     store: MongoStore.create({ mongoUrl: process.env.MONGO_CONNECTION_STRING }),
-//   })
-// );
+
+app.use(session(sessionConfiguration));
+
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: true, credentials: true }));

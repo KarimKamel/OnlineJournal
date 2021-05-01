@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js",
     "client": "npm start --prefix try1/",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "deploy": "git add . && git commit -m 'pre-deploy' && git push heroku master"
   },
   "author": "",
   "license": "ISC",
