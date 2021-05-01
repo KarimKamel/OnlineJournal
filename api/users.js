@@ -126,6 +126,8 @@ router.post("/signin", async (req, res) => {
     if (user.remember) {
       req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 365;
     }
+    console.log("access token set to: " + req.session.accessToken);
+    console.log("refresh token set to: " + req.session.refreshToken);
 
     res.status(200).end();
   } else {
