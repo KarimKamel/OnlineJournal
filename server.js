@@ -3,8 +3,10 @@ const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
 const mongoose = require("mongoose");
-
 require("dotenv").config();
+
+console.log("env", process.env.NODE_ENV);
+
 require("./config/passport")(passport);
 require("./config/db")(mongoose);
 const sessionMiddleware = require("./config/session")(session);
@@ -17,7 +19,8 @@ app.use(passport.session());
 
 app.use(require("cookie-parser")());
 app.use(require("morgan")("combined"));
-if (process.env.NODE_ENV === "production") {
+// if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV) {
   console.log("setting cookie to secure");
   sessionMiddleware.cookie.secure = true;
 }
