@@ -9,14 +9,13 @@ function configSession() {
     secret: process.env.SESSION_SECRET,
     resave: true,
 
-    saveUninitialized: false,
-    // cookie: {
-    //   secure: false,
-    //   httpOnly: false,
-    //   sameSite: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: false,
+      httpOnly: false,
 
-    //   maxAge: 1000 * 60 * 60 * 24 * 365,
-    // },
+      maxAge: 1000 * 60 * 60 * 24 * 365,
+    },
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_CONNECTION_STRING,
     }),
