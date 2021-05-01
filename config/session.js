@@ -7,13 +7,13 @@ function configSession() {
   console.log("configuring session");
   return (config = {
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
 
     saveUninitialized: false,
     cookie: {
       secure: false,
-      httpOnly: true,
-      sameSite: "none",
+      httpOnly: false,
+      sameSite: false,
 
       // maxAge: 1000 * 60 * 60 * 24 * 365,
     },
