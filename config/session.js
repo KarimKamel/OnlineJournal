@@ -4,7 +4,7 @@ mongoStore = MongoStore.create({
 });
 
 function configSession(session) {
-  session({
+  return session({
     secret: process.env.SESSION_SECRET,
     resave: false,
 
@@ -18,13 +18,5 @@ function configSession(session) {
       // maxAge: 1000 * 60 * 60 * 24 * 365,
     },
   });
-  console.log(process.env.Node_ENV);
-  console.log("#########################");
-  if (process.env.NODE_ENV === "production") {
-    console.log("secure cookie switched on");
-    session.cookie.secure = true;
-  }
-
-  return session;
 }
 module.exports = configSession;

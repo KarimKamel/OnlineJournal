@@ -17,6 +17,10 @@ app.use(passport.session());
 
 app.use(require("cookie-parser")());
 app.use(require("morgan")("combined"));
+if (process.env.NODE_ENV === "production") {
+  console.log("setting cookie to secure");
+  sessionMiddleware.cookie.secure = true;
+}
 app.use(sessionMiddleware);
 // app.use(
 //   session({
