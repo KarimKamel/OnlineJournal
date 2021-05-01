@@ -19,7 +19,6 @@ app.use(passport.session());
 
 app.use(require("cookie-parser")());
 app.use(require("morgan")("combined"));
-console.log("cookie:" + session.cookie);
 // if (process.env.NODE_ENV === "production") {
 //   sessionConfiguration.cookie.secure = true;
 //   app.set("trust proxy", true); // trust first proxy
@@ -28,6 +27,8 @@ console.log("cookie:" + session.cookie);
 // }
 
 app.use(session(sessionConfiguration));
+console.log(session.Cookie.secure);
+console.log("cookie:" + session.cookie);
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
