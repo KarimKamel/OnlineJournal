@@ -164,6 +164,7 @@ router.get("/auth", async (req, res) => {
       console.log("token expired");
       res.status(401).end(err.message);
     } else {
+      console.log(err.message);
       res.status(403).end(err.message);
     }
   }
