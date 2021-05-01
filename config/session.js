@@ -22,7 +22,7 @@ function configSession(session) {
   console.log("#########################");
   if (process.env.NODE_ENV === "production") {
     console.log("secure cookie switched on");
-    sess.cookie.secure = true;
+    session.cookie.secure = true;
   }
 
   return session;
