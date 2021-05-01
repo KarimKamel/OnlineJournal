@@ -151,6 +151,7 @@ router.get("/refreshToken", (req, res) => {
 
 router.get("/auth", async (req, res) => {
   console.log("auth get");
+  console.log(req.session);
   const { refreshToken, accessToken } = req.session;
   console.log("received access token: " + accessToken);
   console.log("received refresh token: " + refreshToken);
