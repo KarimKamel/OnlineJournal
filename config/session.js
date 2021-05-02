@@ -15,7 +15,7 @@ function configSession() {
       secure: false,
       httpOnly: true,
       expires: expiryDate,
-      // sameSite: "none",
+      sameSite: false,
     },
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_CONNECTION_STRING,
