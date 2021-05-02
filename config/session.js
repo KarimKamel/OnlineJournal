@@ -12,10 +12,10 @@ function configSession() {
 
     saveUninitialized: true,
     cookie: {
-      secure: false,
+      secure: true,
       httpOnly: false,
       expires: expiryDate,
-      sameSite: "lax",
+      sameSite: "none",
     },
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_CONNECTION_STRING,
