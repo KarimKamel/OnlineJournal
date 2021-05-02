@@ -79,16 +79,27 @@ router.post("/signup", async (req, res) => {
     password: passwordHash,
   });
 
-  newUser.save((err, user) => {
+  try {
+    const user = await newUser.save();
+    console.log("user created:" + user);
+    const { username } = user;
+    const { refreshToken, accessToken } = getTokens(username);
+
+    req.session.refreshToken = refreshToken;
+    req.session.accessToken = accessToken;
+    if (user.remember) {
+      req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 365;
+    }
+    console.log("access token set to: " + req.session.accessToken);
+    console.log("refresh token set to: " + req.session.refreshToken);
+    res.status(200).send({ username: user.username });
+  } catch (err) {
     if (err) {
       console.log(err);
       if (err.code === 11000)
         res.status(403).json({ message: "username is taken" });
-    } else {
-      console.log("user created:" + user);
-      res.status(200).send({ username: user.username });
     }
-  });
+  }
 });
 
 router.patch("/:username", async (req, res) => {

@@ -89,8 +89,19 @@ router.get("/", async (req, res) => {
 });
 router.post("/", async (req, res) => {
   console.log("in post entry");
-  const { date, data, username, title, createdAt } = req.body.data;
+  const {
+    date,
+    data,
+    username,
+    title,
+    createdAt,
+    timezoneOffset,
+  } = req.body.data;
   console.log("save entry date:", date);
+  const serverTimezoneOffset = new Date().getTimezoneOffset();
+  console.log(
+    "timezone offeset difference:" + (timezoneOffset - serverTimezoneOffset)
+  );
   const user = await User.findOne({ username });
   console.log(user);
   const newEntry = new Entry({
