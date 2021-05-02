@@ -64,8 +64,7 @@ router.get("/", async (req, res) => {
     if (isValidDate(date)) {
       const minDate = new Date(date);
       console.log("date is valid");
-      const maxDate = new Date();
-      maxDate.setDate(minDate.getDate() + 1);
+      const maxDate = new Date(minDate.getTime() + 60 * 60 * 24 * 1000);
       console.log("date:" + date);
       console.log("min date " + minDate);
       console.log("max date " + maxDate);
