@@ -8,12 +8,12 @@ function configSession() {
   var expiryDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
   return (config = {
     secret: process.env.SESSION_SECRET,
-    resave: true,
+    resave: false,
 
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
       secure: true,
-      httpOnly: false,
+      httpOnly: true,
       expires: expiryDate,
       sameSite: "none",
     },
