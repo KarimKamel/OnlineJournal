@@ -5,7 +5,8 @@ const User = require("../models/User");
 const dateFormat = require("dateformat");
 
 function isValidDate(date) {
-  return date.getTime() === date.getTime();
+  const tempDate = new Date(date);
+  return tempDate.getTime() === tempDate.getTime();
 }
 
 // router.get("/date/:date/username/:username", async (req, res) => {
@@ -60,7 +61,8 @@ router.get("/", async (req, res) => {
   try {
     const user = await User.findOne({ username });
 
-    if (isValidDate(minDate)) {
+    if (isValidDate(date)) {
+      console.log("date is valid");
       const maxDate = new Date();
       maxDate.setDate(minDate.getDate() + 1);
 
