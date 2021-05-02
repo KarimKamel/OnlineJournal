@@ -80,7 +80,10 @@ router.get("/", async (req, res) => {
       const entries = await Entry.find({
         userId: user._id,
       });
-      console.log(entries);
+      // console.log(entries);
+      console.log("first entry:" + firstEntry);
+      console.log("last entry:" + lastEntry);
+
       console.log(entries.slice(firstEntry, lastEntry));
       res.json(entries.slice(firstEntry, lastEntry));
     }
@@ -98,7 +101,7 @@ router.post("/", async (req, res) => {
     createdAt,
     timezoneOffset,
   } = req.body.data;
-  console.log("save entry date:", date);
+  console.log("received date in save entry:", date);
   const serverTimezoneOffset = new Date().getTimezoneOffset();
   console.log(
     "timezone offeset difference:" + (timezoneOffset - serverTimezoneOffset)
