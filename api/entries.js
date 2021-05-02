@@ -75,7 +75,6 @@ router.get("/", async (req, res) => {
         date: { $gte: minDate, $lt: maxDate },
         userId: user._id,
       });
-      console.log(entries);
       res.json(entries);
     } else {
       const entries = await Entry.find({
