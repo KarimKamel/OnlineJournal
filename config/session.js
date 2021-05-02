@@ -5,17 +5,17 @@ mongoStore = MongoStore.create({
 
 function configSession() {
   console.log("configuring session");
-  var expiryDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+  const isProduction = process.env.NODE_ENV === "production";
+  console.log("Node env production settings set to: " + isProduction);
   return (config = {
     secret: process.env.SESSION_SECRET,
     resave: false,
 
     saveUninitialized: false,
     cookie: {
-      secure: true,
+      secure: isProduction ? true : false,
       httpOnly: true,
-      expires: expiryDate,
-      sameSite: "none",
+      sameSite: isProduction ? "none" : false,
     },
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_CONNECTION_STRING,
