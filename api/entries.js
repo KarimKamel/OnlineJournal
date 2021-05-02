@@ -62,12 +62,13 @@ router.get("/", async (req, res) => {
     const user = await User.findOne({ username });
 
     if (isValidDate(date)) {
+      const minDate = new Date(date);
       console.log("date is valid");
       const maxDate = new Date();
       maxDate.setDate(minDate.getDate() + 1);
-
-      console.log("current date " + minDate);
-      console.log("next day  date " + maxDate);
+      console.log("date:" + date);
+      console.log("min date " + minDate);
+      console.log("max date " + maxDate);
 
       const user = await User.findOne({ username });
 
