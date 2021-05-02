@@ -8,37 +8,39 @@ function isValidDate(date) {
   return date.getTime() === date.getTime();
 }
 
-router.get("/date/:date/username/:username", async (req, res) => {
-  console.log("get entries by username and date");
-  const { date, username } = req.params;
-  try {
-    const user = await User.findOne({ username });
-    const currentDate = new Date(date);
+// router.get("/date/:date/username/:username", async (req, res) => {
+//   console.log("get entries by username and date");
+//   const { date, username } = req.params;
+//   try {
+//     const user = await User.findOne({ username });
+//     const currentDate = new Date(date);
 
-    if (isValidDate(currentDate)) {
-      currentDate.setHours(0, 0, 0, 0);
-      const dayInMS = 1000 * 60 * 60 * 24;
-      const nextDayDate = currentDate + dayInMS;
-      console.log("current date " + dateFormat(currentDate));
-      console.log("next day date " + dateFormat(nextDayDate));
+//     if (isValidDate(currentDate)) {
+//       currentDate.setHours(0, 0, 0, 0);
+//       const dayInMS = 1000 * 60 * 60 * 24;
+//       const nextDayDate = currentDate + dayInMS;
+//       console.log("current date " + dateFormat(currentDate));
+//       console.log("next day date " + dateFormat(nextDayDate));
+//       console.log("current date no format" + currentDate);
+//       console.log("next day date no format" + nextDayDate);
 
-      const entries = await Entry.find({
-        date: { $gte: currentDate, $lt: nextDayDate },
-        userId: user._id,
-      });
-      console.log(entries);
-      res.json(entries);
-    } else {
-      const entries = await Entry.find({
-        userId: user._id,
-      });
-      console.log(entries);
-      res.json(entries);
-    }
-  } catch (err) {
-    console.log(err);
-  }
-});
+//       const entries = await Entry.find({
+//         date: { $gte: currentDate, $lt: nextDayDate },
+//         userId: user._id,
+//       });
+//       console.log(entries);
+//       res.json(entries);
+//     } else {
+//       const entries = await Entry.find({
+//         userId: user._id,
+//       });
+//       console.log(entries);
+//       res.json(entries);
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// });
 
 router.get("/count", async (req, res) => {
   const { username } = req.query;
