@@ -8,15 +8,14 @@ function configSession() {
   var expiryDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
   return (config = {
     secret: process.env.SESSION_SECRET,
-    resave: true,
+    resave: false,
 
     saveUninitialized: true,
     cookie: {
       secure: false,
-      httpOnly: false,
+      httpOnly: true,
       expires: expiryDate,
-      sameSite: "none",
-      maxAge: 1000 * 60 * 60 * 24 * 365,
+      // sameSite: "none",
     },
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_CONNECTION_STRING,

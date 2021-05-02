@@ -13,11 +13,11 @@ const sessionConfiguration = require("./config/session");
 
 const app = express();
 
-app.set("trust proxy", true);
+app.set("trust proxy", 1);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(require("cookie-parser")());
+// app.use(require("cookie-parser")());
 app.use(require("morgan")("combined"));
 // if (process.env.NODE_ENV === "production") {
 //   sessionConfiguration.cookie.secure = true;
@@ -26,13 +26,22 @@ app.use(require("morgan")("combined"));
 //   console.log("secure cookie set to true");
 // }
 
-app.use(session(sessionConfiguration));
-console.log(session.Cookie.secure);
-console.log("cookie:" + session.cookie);
+// app.use(session(sessionConfiguration));
+// console.log(session.Cookie.secure);
+// console.log("cookie:" + session.cookie);
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: true, credentials: true }));
+// app.use(
+//   session({
+//     secret: "keyboard cat",
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: { secure: false },
+//   })
+// );
+app.use(session(sessionConfiguration));
 
 const entriesRouter = require("./api/entries");
 const usersRouter = require("./api/users");
