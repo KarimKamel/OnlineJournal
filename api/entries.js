@@ -59,8 +59,6 @@ router.get("/", async (req, res) => {
 
   try {
     const user = await User.findOne({ username });
-    const minDate = new Date(date);
-    minDate.setHours(0, 0, 0, 0);
 
     if (isValidDate(minDate)) {
       const maxDate = new Date();
