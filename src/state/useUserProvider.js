@@ -64,6 +64,7 @@ export default function useUserProvider() {
   }
 
   async function userGoogleSignIn(accessTokenObj) {
+    console.log("in google sign in");
     const res = await googleSignin(accessTokenObj);
     console.log("useUserProvider googleSignIn res:");
     console.log(res);

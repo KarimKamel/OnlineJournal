@@ -74,6 +74,7 @@ export default function Signin(props) {
 
   async function responseGoogle(response) {
     try {
+      console.log(response);
       // console.log(response.tokenObj["access_token"]);
       const accessTokenObj = { access_token: response.tokenObj.access_token };
       userContext.userGoogleSignIn(accessTokenObj);
@@ -139,7 +140,8 @@ export default function Signin(props) {
       </div> */}
       <div className={classes.buttonContainer}>
         <GoogleLogin
-          clientId="507566462397-llnfhqvlk2g21hsviv4jditq01i9f860.apps.googleusercontent.com"
+          // clientId="507566462397-llnfhqvlk2g21hsviv4jditq01i9f860.apps.googleusercontent.com"
+          clientId="507566462397-vdp1f4lpqml8a4fppi7h5d1sg4fm72h0.apps.googleusercontent.com" //production
           className={classes.googleButton}
           buttonText="Login"
           onSuccess={responseGoogle}
