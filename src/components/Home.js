@@ -7,10 +7,6 @@ import { getHome } from "../api/authApi";
 import journalImg from "../img/stockJournal.png";
 
 const useStyles = makeStyles({
-  root: {
-    // display: "flex",
-    // justifyContent: "center",
-  },
   title: {
     marginTop: "2rem",
     marginBottom: "4rem",
@@ -36,9 +32,6 @@ export default function Home() {
   const userContext = useUserContext();
   const classes = useStyles();
 
-  // if (userContext.userState) {
-  //   console.log(userContext.userState);
-  // }
   useEffect(() => {
     getHome();
   });

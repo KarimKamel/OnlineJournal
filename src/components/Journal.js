@@ -1,14 +1,9 @@
-import { useUserContext } from "../context/UserContext";
 import { Container, ListGroup, Col, Row } from "react-bootstrap";
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 import journalImg from "../img/stockJournal.png";
 
 const useStyles = makeStyles({
-  root: {
-    // display: "flex",
-    // justifyContent: "center",
-  },
   title: {
     marginTop: "2rem",
     marginBottom: "4rem",
@@ -31,7 +26,6 @@ const useStyles = makeStyles({
 });
 
 export default function Home() {
-  const userContext = useUserContext();
   const classes = useStyles();
 
   // if (userContext.userState) {

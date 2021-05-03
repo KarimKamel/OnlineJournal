@@ -77,7 +77,7 @@ export default function AllEntries() {
   const [loading, setLoading] = useState(false);
   const userContext = useUserContext();
   const classes = useStyles();
-  const { path, url, isExact } = useRouteMatch();
+  const { path } = useRouteMatch();
   const history = useHistory();
   const [numberOfEntries, setNumberOfEntries] = useState(0);
   const [activePage, setActivePage] = useState(1);

@@ -39,7 +39,6 @@ export default function Profile(props) {
     hobbies: "",
   });
   const [loading, setLoading] = useState(false);
-  const history = useHistory();
   const classes = useStyles();
 
   useLayoutEffect(() => {

@@ -3,37 +3,8 @@ import { makeStyles } from "@material-ui/styles";
 
 import { useEffect } from "react";
 import { useUserContext } from "../context/UserContext";
-import { Container, Navbar, Nav } from "react-bootstrap";
-import { Transition } from "react-transition-group";
+import { Navbar, Nav } from "react-bootstrap";
 
-// export default function Nav(props) {
-//   const classes = useStyles();
-//   const userContext = useUserContext();
-//   useEffect(() => {
-//     console.log("useeffect Navbar");
-//   }, [userContext.user]);
-
-//   return (
-//     <div>
-//       {console.log("render navbar")}
-//       <div>
-//         <Link to="/">Home</Link>
-
-//         {userContext.user ? (
-//           <>
-//             <Link to="/profile">Profile</Link>
-//             {/* <Link className="nav-link" to="/signout">
-//               Signout
-//             </Link> */}
-//             <button onClick={() => userContext.userSignOut()}>signout</button>
-//           </>
-//         ) : (
-//           <Link to="/signin">Signin</Link>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
 export default function NavComp(props) {
   const classes = useStyles();
   const userContext = useUserContext();

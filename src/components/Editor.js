@@ -3,7 +3,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 export default function Editor(props) {
-  const [editMode, setEditMode] = useState(true);
+  const [editMode] = useState(true);
   const { data, setData } = props;
 
   useEffect(() => {

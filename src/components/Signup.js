@@ -1,10 +1,9 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useUserContext } from "../context/UserContext";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
-import { Form, Button, Container, Row, Col, Spinner } from "react-bootstrap";
+import { Form, Button, Container, Spinner } from "react-bootstrap";
 import passwordValidator from "password-validator";
-import { set } from "mongoose";
 
 const useStyles = makeStyles({
   root: {},
@@ -24,7 +23,6 @@ const useStyles = makeStyles({
 });
 
 export default function Signup(props) {
-  const history = useHistory();
   const userContext = useUserContext();
   const classes = useStyles();
   const [errorMessage, setErrorMessage] = useState({
@@ -37,9 +35,9 @@ export default function Signup(props) {
   }, [userContext]);
 
   const [formFields, setFormFields] = useState({
-    username: "user1",
-    password: "pass1234",
-    repeatPassword: "pass1234",
+    username: "",
+    password: "",
+    repeatPassword: "",
   });
 
   const handleChange = (e) => {
@@ -73,30 +71,20 @@ export default function Signup(props) {
       const result = await userContext.userSignUp(username, password);
       setLoading(false);
 
-      console.log("signup result");
-      console.log(result);
       if (result !== username) {
         setErrorMessage({ status: true, errorMessageList: [result] });
       }
     }
-    // return setErrorMessage((prev) => ({
-    //   ...prev,
-    //   status: true,
-    //   [`message${idx}`]: message,
-    // }));
   };
 
   var schema = new passwordValidator();
-
-  // Add properties to it
-  // Should not have spaces
 
   function validatePassword(password) {
     schema
       .is()
       .min(8) // Minimum length 8
       .is()
-      .max(100) // Maximum length 100                      // Must have lowercase letters
+      .max(100) // Maximum length 100
       .has()
       .digits(1) // Must have at least 2 digits
       .has()
@@ -165,57 +153,4 @@ export default function Signup(props) {
       )}
     </Container>
   );
-
-  // return (
-  //   <div>
-  //     {console.log(userContext.user)}
-  //     {console.log("no user found")}
-  //     <h1>Signin Page</h1>
-  //     <form onSubmit={handleSubmit}>
-  //       <label htmlFor="">username</label>
-  //       <input
-  //         value={formFields.username}
-  //         onChange={handleChange}
-  //         name="username"
-  //       />
-  //       <label htmlFor="">password</label>
-  //       <input
-  //         value={formFields.password}
-  //         onChange={handleChange}
-  //         name="password"
-  //       />
-  //       <button type="submit">Submit</button>
-  //     </form>
-  //   </div>
-  // );
-  // function protect() {
-  //   if (userContext.user) {
-  //     history.push("/profile");
-  //   } else {
-  //     return (
-  //       <>
-  //         {console.log(userContext.user)}
-  //         {console.log("no user found")}
-  //         <h1>Signin Page</h1>
-  //         <form onSubmit={handleSubmit}>
-  //           <label htmlFor="">username</label>
-  //           <input
-  //             value={formFields.username}
-  //             onChange={handleChange}
-  //             name="username"
-  //           />
-  //           <label htmlFor="">password</label>
-  //           <input
-  //             value={formFields.password}
-  //             onChange={handleChange}
-  //             name="password"
-  //           />
-  //           <button type="submit">Submit</button>
-  //         </form>
-  //       </>
-  //     );
-  //   }
-  // }
-
-  // return <div>{protect()}</div>;
 }

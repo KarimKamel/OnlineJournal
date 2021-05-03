@@ -10,12 +10,9 @@ export default function Middleware({ props }) {
   useLayoutEffect(() => {
     async function checkTokenValidity() {
       userContext.setLoading(true);
-      console.log("loading set to true");
-      console.log("###########################");
+
       await userContext.userCheckAndRefreshAuth();
       userContext.setLoading(false);
-      console.log("loading set to false");
-      console.log("###########################");
     }
     checkTokenValidity();
   }, [location.pathname]);

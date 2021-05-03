@@ -1,9 +1,5 @@
 import serverUrl from "./config";
 
-// if (process.env.NODE_ENV === "development")
-//   serverUrl = process.env.REACT_APP_LOCAL_SERVER_URL;
-// else if (process.env.NODE_ENV === "production")
-//   serverUrl = process.env.REACT_APP_HEROKU_SERVER_URL;
 async function saveEntry(data, date, title, username) {
   const entryData = { data, date, title, username };
   console.log("saving: ", data);

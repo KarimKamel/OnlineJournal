@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useUserContext } from "../context/UserContext";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 import { GoogleLogin } from "react-google-login";
@@ -40,7 +39,6 @@ const useStyles = makeStyles({
 });
 
 export default function Signin(props) {
-  const history = useHistory();
   const userContext = useUserContext();
   const classes = useStyles();
   const [errorMessage, setErrorMessage] = useState(false);
@@ -50,8 +48,8 @@ export default function Signin(props) {
   }, [userContext]);
 
   const [formFields, setFormFields] = useState({
-    username: "user",
-    password: "pass1234",
+    username: "",
+    password: "",
     remember: false,
   });
   const handleCheck = (e) => {

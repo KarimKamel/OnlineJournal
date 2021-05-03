@@ -42,11 +42,8 @@ export default function NewEntry(props) {
     if (!date) {
       date = new Date();
     }
-    console.log("try block, date: " + date);
     date = decodeURI(date);
-    console.log("date decoded to :" + date);
     displayDate = dateFormat(date, "dddd dd mmmm yyyy");
-    console.log("formatted date: " + date);
   } catch (err) {
     console.log(location.search.slice(1));
     console.log(err);
@@ -55,8 +52,6 @@ export default function NewEntry(props) {
   const handleSubmit = async (data) => {
     const createdAt = new Date();
     const timezoneOffset = createdAt.getTimezoneOffset();
-    console.log("sending date as:", date);
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
     const entryData = {
       date,
