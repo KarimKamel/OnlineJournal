@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.js": "/static/js/main.b574a1ab.chunk.js",
-    "main.js.map": "/static/js/main.b574a1ab.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.90431476.js",
-    "runtime-main.js.map": "/static/js/runtime-main.90431476.js.map",
-    "static/css/2.45482f6c.chunk.css": "/static/css/2.45482f6c.chunk.css",
-    "static/js/2.e2c924ea.chunk.js": "/static/js/2.e2c924ea.chunk.js",
-    "static/js/2.e2c924ea.chunk.js.map": "/static/js/2.e2c924ea.chunk.js.map",
-    "static/js/3.f7efed4f.chunk.js": "/static/js/3.f7efed4f.chunk.js",
-    "static/js/3.f7efed4f.chunk.js.map": "/static/js/3.f7efed4f.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.45482f6c.chunk.css.map": "/static/css/2.45482f6c.chunk.css.map",
-    "static/js/2.e2c924ea.chunk.js.LICENSE.txt": "/static/js/2.e2c924ea.chunk.js.LICENSE.txt",
-    "static/media/stockJournal.16770ff0.png": "/static/media/stockJournal.16770ff0.png"
+    "main.js": "/OnlineJournal/static/js/main.b574a1ab.chunk.js",
+    "main.js.map": "/OnlineJournal/static/js/main.b574a1ab.chunk.js.map",
+    "runtime-main.js": "/OnlineJournal/static/js/runtime-main.cdf9cd58.js",
+    "runtime-main.js.map": "/OnlineJournal/static/js/runtime-main.cdf9cd58.js.map",
+    "static/css/2.45482f6c.chunk.css": "/OnlineJournal/static/css/2.45482f6c.chunk.css",
+    "static/js/2.e2c924ea.chunk.js": "/OnlineJournal/static/js/2.e2c924ea.chunk.js",
+    "static/js/2.e2c924ea.chunk.js.map": "/OnlineJournal/static/js/2.e2c924ea.chunk.js.map",
+    "static/js/3.f7efed4f.chunk.js": "/OnlineJournal/static/js/3.f7efed4f.chunk.js",
+    "static/js/3.f7efed4f.chunk.js.map": "/OnlineJournal/static/js/3.f7efed4f.chunk.js.map",
+    "index.html": "/OnlineJournal/index.html",
+    "static/css/2.45482f6c.chunk.css.map": "/OnlineJournal/static/css/2.45482f6c.chunk.css.map",
+    "static/js/2.e2c924ea.chunk.js.LICENSE.txt": "/OnlineJournal/static/js/2.e2c924ea.chunk.js.LICENSE.txt",
+    "static/media/stockJournal.16770ff0.png": "/OnlineJournal/static/media/stockJournal.16770ff0.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.90431476.js",
+    "static/js/runtime-main.cdf9cd58.js",
     "static/css/2.45482f6c.chunk.css",
     "static/js/2.e2c924ea.chunk.js",
     "static/js/main.b574a1ab.chunk.js"
