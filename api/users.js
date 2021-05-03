@@ -57,7 +57,6 @@ router.post(
   "/google/signin",
   passport.authenticate("google-token", { session: false }),
   function (req, res) {
-    console.log("hit verify");
     const username = req.user.username;
     const { refreshToken, accessToken } = getTokens(username);
 
