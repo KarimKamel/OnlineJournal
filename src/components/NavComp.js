@@ -60,6 +60,12 @@ export default function NavComp(props) {
               <Link className="nav-link" to="/Calendar">
                 Calendar
               </Link>
+              <Link className="nav-link" to="/journal">
+                Journal
+              </Link>
+              <Link className="nav-link" to="/allentries">
+                All Entries
+              </Link>
               <Link className="nav-link" to="/profile">
                 Profile
               </Link>

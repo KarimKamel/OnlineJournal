@@ -1,13 +1,5 @@
-import React, { useState, useEffect, useReducer } from "react";
-import {
-  BrowserRouter,
-  Redirect,
-  Route,
-  useHistory,
-  useRouteMatch,
-  useLocation,
-} from "react-router-dom";
-import { trackPromise } from "react-promise-tracker";
+import React from "react";
+import { BrowserRouter, Redirect, Route } from "react-router-dom";
 
 import Middleware from "./components/Middleware";
 import Signup from "./components/Signup";
@@ -16,11 +8,13 @@ import Signin from "./components/Signin";
 import Signout from "./components/Signout";
 import Profile from "./components/Profile";
 import NavComp from "./components/NavComp";
-import Entries from "./components/Entries";
+import Journal from "./components/Journal";
+
 import Calendar from "./components/Calendar";
 import { useUserContext } from "./context/UserContext";
 import { makeStyles } from "@material-ui/styles";
-import { Container, Navbar } from "react-bootstrap";
+import AllEntries from "./components/AllEntries";
+import NewEntry from "./components/NewEntry";
 
 const useStyles = makeStyles({
   loadingContainer: {
@@ -38,6 +32,9 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      {console.log(process.env.NODE_ENV)}
+      {console.log("#####################")}
+
       {console.log("rendering APP")}
       <Middleware />
       <div>
@@ -64,7 +61,7 @@ export default function App() {
               ) : (
                 <Redirect
                   to={{
-                    pathname: "/profile",
+                    pathname: "/",
                   }}
                 />
               )}
@@ -92,12 +89,34 @@ export default function App() {
                 />
               )}
             </Route>
+            <Route path="/allentries">
+              {userContext.user ? (
+                <AllEntries />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/signin",
+                  }}
+                />
+              )}
+            </Route>
             <Route path="/Calendar">
               <Calendar />
             </Route>
-            <Route path="/signout">
+            <Route path="/journal">
               {userContext.user ? (
-                <Signout />
+                <Journal />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/",
+                  }}
+                />
+              )}
+            </Route>
+            <Route path="/entries/create-entry">
+              {userContext.user ? (
+                <NewEntry />
               ) : (
                 <Redirect
                   to={{

@@ -30,6 +30,10 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
 });
+function strip(html) {
+  let doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || "";
+}
 
 export default function DisplayEntry(props) {
   const location = useLocation();
@@ -120,39 +124,42 @@ export default function DisplayEntry(props) {
             <h1 className={classes.message}>post has been deleted</h1>
           ) : (
             <div>
-              <label htmlFor="titleInput" className={classes.titleLabel}>
-                Title
-              </label>
-              <input
-                id="titleInput"
-                type="text"
-                value={title}
-                className={classes.titleInput}
-                onChange={(event) => setTitle(event.target.value)}
-                disabled={!editMode}
-              />
-
-              <CKEditor
-                editor={ClassicEditor}
-                data={data}
-                onReady={(editor) => {
-                  // You can store the "editor" and use when it is needed.
-                  console.log("Editor is ready to use!", editor);
-                }}
-                onChange={(event, editor) => setData(editor.getData())}
-                disabled={!editMode}
-              />
-
               {editMode ? (
-                <Button
-                  variant={"dark mt-2"}
-                  className={classes.buttonSave}
-                  onClick={() => handleSubmit()}
-                >
-                  save changes{" "}
-                </Button>
+                <div>
+                  <label htmlFor="titleInput" className={classes.titleLabel}>
+                    Title
+                  </label>
+                  <input
+                    id="titleInput"
+                    type="text"
+                    value={title}
+                    className={classes.titleInput}
+                    onChange={(event) => setTitle(event.target.value)}
+                    disabled={!editMode}
+                  />
+
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={data}
+                    onReady={(editor) => {
+                      // You can store the "editor" and use when it is needed.
+                      console.log("Editor is ready to use!", editor);
+                    }}
+                    onChange={(event, editor) => setData(editor.getData())}
+                    disabled={!editMode}
+                  />
+                  <Button
+                    variant={"dark mt-2"}
+                    className={classes.buttonSave}
+                    onClick={() => handleSubmit()}
+                  >
+                    save changes{" "}
+                  </Button>
+                </div>
               ) : (
                 <>
+                  <h1>{strip(title)}</h1>
+                  <p>{strip(data)}</p>
                   <Button
                     variant={"dark"}
                     className={classes.buttonSave}

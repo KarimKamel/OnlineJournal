@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
-import { useUserContext } from "../context/UserContext";
-import dateFormat from "dateformat";
+
 import { useLocation } from "react-router";
-import { Card, Button, Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { makeStyles } from "@material-ui/styles";
-import { getEntry, updateEntry, saveEntry } from "../api/entriesApi";
+import { getEntry, updateEntry } from "../api/entriesApi";
 const useStyles = makeStyles({
   root: {
     paddingTop: "2rem",

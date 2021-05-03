@@ -1,7 +1,11 @@
-import { trackPromise } from "react-promise-tracker";
+import serverUrl from "./config";
 
 async function checkAuth() {
-  const response = await fetch("http://localhost:3001/users/auth", {
+  var formedUrl = `${serverUrl}users/auth`;
+  console.log(formedUrl);
+  console.log("checking auth");
+
+  const response = await fetch(formedUrl, {
     method: "GET",
     credentials: "include",
     headers: {
@@ -11,7 +15,7 @@ async function checkAuth() {
   return response;
 }
 async function refreshAuth() {
-  const response = await fetch("http://localhost:3001/users/refreshToken", {
+  const response = await fetch(`${serverUrl}users/refreshToken`, {
     method: "GET",
     credentials: "include",
     headers: {
@@ -20,8 +24,24 @@ async function refreshAuth() {
   });
   return response;
 }
+async function getHome() {
+  const response = await fetch(`${serverUrl}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.text();
+  console.log(response);
+  console.log(response.headers);
+  console.log(data);
+
+  return response;
+}
 
 async function checkAndRefreshAuth() {
+  console.log("in check and refresh auth");
   let res = await checkAuth();
   if (res.status === 200) {
     console.log("access token valid");
@@ -59,7 +79,7 @@ async function checkAndRefreshAuth() {
 }
 
 async function signout() {
-  const res = await fetch("http://localhost:3001/users/signout", {
+  const res = await fetch(`${serverUrl}users/signout`, {
     withCredentials: true,
     credentials: "include",
   });
@@ -68,7 +88,7 @@ async function signout() {
 
 async function signin(data) {
   // Default options are marked with *
-  const response = await fetch("http://localhost:3001/users/signin", {
+  const response = await fetch(`${serverUrl}users/signin`, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     withCredentials: true,
     credentials: "include",
@@ -83,7 +103,7 @@ async function signin(data) {
 }
 async function signup(data) {
   // Default options are marked with *
-  const response = await fetch("http://localhost:3001/users/signup", {
+  const response = await fetch(`${serverUrl}users/signup`, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     withCredentials: true,
     credentials: "include",
@@ -96,10 +116,11 @@ async function signup(data) {
   });
   console.log("authAPI signup response");
   console.log(response);
+
   return response; // parses JSON response into native JavaScript objects
 }
 async function googleSignin(accessTokenObj) {
-  const res = await fetch("http://localhost:3001/users/google/signin", {
+  const res = await fetch(`${serverUrl}users/google/signin`, {
     method: "POST",
     withCredentials: true,
     credentials: "include",
@@ -112,8 +133,37 @@ async function googleSignin(accessTokenObj) {
   });
   return res;
 }
+async function updateDetails(data) {
+  const { username, name, email, hobbies } = data;
+  const res = await fetch(`${serverUrl}users/${username}`, {
+    // const res = await fetch(`${serverUrl}users/user`, {
+    method: "PATCH",
+    withCredentials: true,
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: JSON.stringify({ name, email, hobbies }),
+  });
+  return res;
+}
+async function getDetails(data) {
+  const username = data;
+  const res = await fetch(`${serverUrl}users/${username}`, {
+    method: "GET",
+    withCredentials: true,
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+  return res;
+}
 
 export {
+  getHome,
   checkAuth,
   refreshAuth,
   signin,
@@ -121,4 +171,6 @@ export {
   signup,
   checkAndRefreshAuth,
   googleSignin,
+  updateDetails,
+  getDetails,
 };

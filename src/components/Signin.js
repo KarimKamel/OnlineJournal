@@ -11,7 +11,9 @@ const useStyles = makeStyles({
   button: {
     marginBottom: "2rem",
   },
-  dividerContainer: {},
+  dividerContainer: {
+    marginTop: "4rem",
+  },
   dividerText: {
     marginTop: "-45px",
     border: "2px solid black",
@@ -29,7 +31,7 @@ const useStyles = makeStyles({
   },
   googleButton: {
     width: "80%",
-    background: "red",
+    background: "red !important",
     color: "white",
     padding: "1rem",
     border: "0px",
@@ -48,19 +50,22 @@ export default function Signin(props) {
   }, [userContext]);
 
   const [formFields, setFormFields] = useState({
-    username: "nameone",
-    password: "password",
+    username: "user",
+    password: "pass1234",
+    remember: false,
   });
-
+  const handleCheck = (e) => {
+    setFormFields((prev) => ({
+      ...prev,
+      [e.target.name]: !formFields.remember,
+    }));
+  };
   const handleChange = (e) => {
     console.log("change");
     setFormFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const handleSubmit = async (e) => {
-    console.log(e);
-    console.log("submit");
     e.preventDefault();
-    console.log(userContext);
     const user = formFields;
     const result = await userContext.userSignIn(user);
     console.log(result);
@@ -70,9 +75,13 @@ export default function Signin(props) {
   };
 
   async function responseGoogle(response) {
-    console.log(response.tokenObj["access_token"]);
-    const accessTokenObj = { access_token: response.tokenObj.access_token };
-    userContext.userGoogleSignIn(accessTokenObj);
+    try {
+      // console.log(response.tokenObj["access_token"]);
+      const accessTokenObj = { access_token: response.tokenObj.access_token };
+      userContext.userGoogleSignIn(accessTokenObj);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -101,6 +110,14 @@ export default function Signin(props) {
             placeholder="Password"
           />
         </Form.Group>
+        <Form.Group controlId="formBasicCheckbox">
+          <Form.Check
+            name="remember"
+            onChange={handleCheck}
+            type="checkbox"
+            label="remember me on this pc"
+          />
+        </Form.Group>
 
         <Button className={classes.button} variant="primary" type="submit">
           Submit
@@ -111,7 +128,7 @@ export default function Signin(props) {
           </Alert>
         )}
       </Form>
-      <div>
+      <div className={classes.dividerContainer}>
         <hr></hr>
 
         <h1 className={classes.dividerText}>Or</h1>
@@ -122,67 +139,16 @@ export default function Signin(props) {
           <span>connect with google</span>
         </button>
       </div> */}
-      <GoogleLogin
-        clientId="507566462397-llnfhqvlk2g21hsviv4jditq01i9f860.apps.googleusercontent.com"
-        buttonText="Login"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={"single_host_origin"}
-      />
-      ,
+      <div className={classes.buttonContainer}>
+        <GoogleLogin
+          clientId="507566462397-llnfhqvlk2g21hsviv4jditq01i9f860.apps.googleusercontent.com"
+          className={classes.googleButton}
+          buttonText="Login"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={"single_host_origin"}
+        />
+      </div>
     </Container>
   );
-
-  // return (
-  //   <div>
-  //     {console.log(userContext.user)}
-  //     {console.log("no user found")}
-  //     <h1>Signin Page</h1>
-  //     <form onSubmit={handleSubmit}>
-  //       <label htmlFor="">username</label>
-  //       <input
-  //         value={formFields.username}
-  //         onChange={handleChange}
-  //         name="username"
-  //       />
-  //       <label htmlFor="">password</label>
-  //       <input
-  //         value={formFields.password}
-  //         onChange={handleChange}
-  //         name="password"
-  //       />
-  //       <button type="submit">Submit</button>
-  //     </form>
-  //   </div>
-  // );
-  // function protect() {
-  //   if (userContext.user) {
-  //     history.push("/profile");
-  //   } else {
-  //     return (
-  //       <>
-  //         {console.log(userContext.user)}
-  //         {console.log("no user found")}
-  //         <h1>Signin Page</h1>
-  //         <form onSubmit={handleSubmit}>
-  //           <label htmlFor="">username</label>
-  //           <input
-  //             value={formFields.username}
-  //             onChange={handleChange}
-  //             name="username"
-  //           />
-  //           <label htmlFor="">password</label>
-  //           <input
-  //             value={formFields.password}
-  //             onChange={handleChange}
-  //             name="password"
-  //           />
-  //           <button type="submit">Submit</button>
-  //         </form>
-  //       </>
-  //     );
-  //   }
-  // }
-
-  // return <div>{protect()}</div>;
 }

@@ -4,6 +4,8 @@ import {
   signout,
   signup,
   googleSignin,
+  updateDetails,
+  getDetails,
 } from "../api/authApi";
 import { useState } from "react";
 import { trackPromise } from "react-promise-tracker";
@@ -13,11 +15,11 @@ export default function useUserProvider() {
   const [loading, setLoading] = useState(false);
 
   async function userSignIn(user) {
-    console.log("useuserprovider signin");
+    console.log("in userSignIn");
     const res = await signin(user);
     if (res.status === 200) {
       console.log("user signin successfull");
-
+      console.log("setting user to: " + user.username);
       setUser(user.username);
       return true;
     }
@@ -28,18 +30,39 @@ export default function useUserProvider() {
 
     console.log(res);
   }
-
-  function userSignUp(username, password) {
-    signup({ username, password }).then((res) => {
-      console.log("useUserProvider signup res:");
-      console.log(res);
-      if (res.status === 200) {
-        console.log("user signin successfull");
-
-        setUser(username);
-      }
-    });
+  async function userUpdateDetails(username, name, email, hobbies) {
+    const data = { username, name, email, hobbies };
+    const res = await updateDetails(data);
+    if (res.status === 200) {
+      const data = await res.json();
+      return data;
+    } else return false;
   }
+  async function userGetDetails(username) {
+    const res = await getDetails(username);
+    if (res.status === 200) {
+      const data = await res.json();
+      console.log(data);
+      return data;
+    } else return false;
+  }
+
+  async function userSignUp(username, password) {
+    const res = await signup({ username, password });
+    console.log("useUserProvider signup res:");
+    console.log(res);
+
+    if (res.status === 200) {
+      console.log("user signin successfull");
+
+      setUser(username);
+      return username;
+    } else {
+      const { message } = await res.json();
+      return message;
+    }
+  }
+
   async function userGoogleSignIn(accessTokenObj) {
     const res = await googleSignin(accessTokenObj);
     console.log("useUserProvider googleSignIn res:");
@@ -73,6 +96,9 @@ export default function useUserProvider() {
     if (username) {
       setUser(username);
       console.log("setting user in context" + username);
+    } else {
+      setUser("");
+      console.log("removing user from context");
     }
     return;
     // console.log("setting loading to false");
@@ -88,5 +114,7 @@ export default function useUserProvider() {
     userSignUp,
     loading,
     setLoading,
+    userGetDetails,
+    userUpdateDetails,
   };
 }

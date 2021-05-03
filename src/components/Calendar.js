@@ -5,7 +5,6 @@ import { Container } from "react-bootstrap";
 import "react-calendar/dist/Calendar.css";
 
 import {
-  Link,
   useRouteMatch,
   useLocation,
   Route,
@@ -14,8 +13,6 @@ import {
 } from "react-router-dom";
 import Entries from "./Entries";
 import { makeStyles } from "@material-ui/styles";
-
-import dateFormat from "dateformat";
 
 const useStyles = makeStyles({
   calendar: {

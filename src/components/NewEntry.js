@@ -3,6 +3,7 @@ import Editor from "./Editor";
 import { useUserContext } from "../context/UserContext";
 import dateFormat from "dateformat";
 import { useLocation, useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { Card, Button, Container } from "react-bootstrap";
 import { makeStyles } from "@material-ui/styles";
 import { getEntry, updateEntry, saveEntry } from "../api/entriesApi";
@@ -35,11 +36,15 @@ export default function NewEntry(props) {
   const username = userContext.user;
   const classes = useStyles();
   var date = location.search.slice(1);
+
   var displayDate;
   try {
+    if (!date) {
+      date = new Date();
+    }
     console.log("try block, date: " + date);
     date = decodeURI(date);
-    console.log("decoded uri:" + date);
+    console.log("date decoded to :" + date);
     displayDate = dateFormat(date, "dddd dd mmmm yyyy");
     console.log("formatted date: " + date);
   } catch (err) {
@@ -48,9 +53,20 @@ export default function NewEntry(props) {
   }
 
   const handleSubmit = async (data) => {
-    const entryData = { date, username, title, data };
+    const createdAt = new Date();
+    const timezoneOffset = createdAt.getTimezoneOffset();
+    console.log("sending date as:", date);
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+
+    const entryData = {
+      date,
+      username,
+      title,
+      data,
+      createdAt,
+      timezoneOffset,
+    };
     async function saveEntryWrapper(entryData) {
-      console.log("data " + entryData);
       const res = await saveEntry(entryData);
       if (res.status === 200) {
         setSuccessMessage(true);
@@ -68,7 +84,12 @@ export default function NewEntry(props) {
         <div>
           {console.log(location.search.slice(1))}
           {console.log(date)}
-          <h1>{displayDate}</h1>
+          <h1>
+            {displayDate}
+            <span style={{ fontSize: "1.2rem" }}>
+              <Link to="/Calendar"> pick a different date</Link>
+            </span>
+          </h1>
           <h3>Create a new Entry</h3>
           <label htmlFor="titleInput" className={classes.inputLabel}>
             title

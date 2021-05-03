@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import dateFormat from "dateformat";
 import {
   Link,
@@ -85,7 +85,8 @@ export default function Entries(props) {
     console.log("use effect entries");
     async function loadEntries() {
       setLoading(true);
-
+      console.log("retrieving for date: ", date);
+      console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
       const entries = await getEntries(userContext.user, date);
       setLoading(false);
 
@@ -100,27 +101,6 @@ export default function Entries(props) {
       }
     }
   }, []);
-  // useEffect(() => {
-  //   console.log("use effect entries");
-  //   async function loadEntries() {
-  //     setLoading(true);
-
-  //     const entries = await getEntries(userContext.user, date);
-  //     setLoading(false);
-
-  //     setEntries(entries);
-  //   }
-  //   if (isExact) {
-  //     console.log("loading entries");
-  //     try {
-  //       loadEntries();
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // }, []);
-
-  // const date = new Date();
 
   return (
     <Switch>
@@ -172,7 +152,8 @@ export default function Entries(props) {
                     {strip(entry.data)}
                   </Card.Text>
                   <div className={classes.linkContainer}>
-                    <button
+                    <Button
+                      variant="dark"
                       onClick={() => {
                         history.push({
                           pathname: `${path}/display-entry`,
@@ -183,8 +164,8 @@ export default function Entries(props) {
                       }}
                     >
                       {" "}
-                      go to post
-                    </button>
+                      go to entry
+                    </Button>
                   </div>
                 </Card.Body>
               </Card>
