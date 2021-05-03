@@ -103,80 +103,65 @@ export default function Entries(props) {
   }, []);
 
   return (
-    <Switch>
-      <Route path={`${path}/display-entry`}>
-        <DisplayEntry />
-      </Route>
-      <Route path={`${path}/create-entry`}>
-        <NewEntry />
-      </Route>
+    <Container>
+      {console.log("entries root")}
 
-      <Route path={`${path}`}>
-        <Container>
-          {console.log("entries root")}
+      <div className={classes.headerContainer}>
+        <h1 className={classes.title}>
+          <em>
+            <i>{displayDate}</i>
+          </em>
+        </h1>
+        <Link
+          to={{
+            pathname: `/entries/create-entry`,
+            new: true,
+            search: date,
+          }}
+        >
+          <Button variant="dark">create new entry</Button>
+        </Link>{" "}
+      </div>
 
-          <div className={classes.headerContainer}>
-            <h1 className={classes.title}>
-              <em>
-                <i>{displayDate}</i>
-              </em>
-            </h1>
-            <Link
-              to={{
-                pathname: `${path}/create-entry`,
-                new: true,
-                search: date,
-              }}
-            >
-              <Button variant="dark">create new entry</Button>
-            </Link>{" "}
-          </div>
-
-          {loading ? (
-            <div className={classes.spinnerContainer}>
-              {" "}
-              <Spinner
-                animation="border"
-                className={classes.spinner}
-                role="status"
-              >
-                <span className="sr-only">Loading...</span>
-              </Spinner>
-            </div>
-          ) : entries.length > 0 ? (
-            entries.map((entry, id) => (
-              <Card key={id} className={classes.card}>
-                <Card.Body>
-                  <Card.Title>{entry.title} </Card.Title>
-                  <Card.Text className={classes.cardText}>
-                    {strip(entry.data)}
-                  </Card.Text>
-                  <div className={classes.linkContainer}>
-                    <Button
-                      variant="dark"
-                      onClick={() => {
-                        history.push({
-                          pathname: `${path}/display-entry`,
-                          entry: entry,
-                          search: `${entry._id}`,
-                          // search: `testentry`,
-                        });
-                      }}
-                    >
-                      {" "}
-                      go to entry
-                    </Button>
-                  </div>
-                </Card.Body>
-              </Card>
-            ))
-          ) : (
-            <div className={classes.noEntriesMessageContainer}>
-              <h1>No entries made on this date</h1>
-            </div>
-          )}
-        </Container>
-      </Route>
-    </Switch>
+      {loading ? (
+        <div className={classes.spinnerContainer}>
+          {" "}
+          <Spinner animation="border" className={classes.spinner} role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      ) : entries.length > 0 ? (
+        entries.map((entry, id) => (
+          <Card key={id} className={classes.card}>
+            <Card.Body>
+              <Card.Title>{entry.title} </Card.Title>
+              <Card.Text className={classes.cardText}>
+                {strip(entry.data)}
+              </Card.Text>
+              <div className={classes.linkContainer}>
+                <Button
+                  variant="dark"
+                  onClick={() => {
+                    history.push({
+                      pathname: `/entries/display-entry`,
+                      entry: entry,
+                      search: `${entry._id}`,
+                      // search: `testentry`,
+                    });
+                  }}
+                >
+                  {" "}
+                  go to entry
+                </Button>
+              </div>
+            </Card.Body>
+          </Card>
+        ))
+      ) : (
+        <div className={classes.noEntriesMessageContainer}>
+          <h1>No entries made on this date</h1>
+        </div>
+      )}
+    </Container>
   );
 }

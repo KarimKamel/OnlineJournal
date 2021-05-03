@@ -15,6 +15,7 @@ import { useUserContext } from "./context/UserContext";
 import { makeStyles } from "@material-ui/styles";
 import AllEntries from "./components/AllEntries";
 import NewEntry from "./components/NewEntry";
+import DisplayEntry from "./components/DisplayEntry";
 
 const useStyles = makeStyles({
   loadingContainer: {
@@ -117,6 +118,17 @@ export default function App() {
             <Route path="/entries/create-entry">
               {userContext.user ? (
                 <NewEntry />
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: "/",
+                  }}
+                />
+              )}
+            </Route>
+            <Route path="/entries/display-entry">
+              {userContext.user ? (
+                <DisplayEntry />
               ) : (
                 <Redirect
                   to={{
