@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/OnlineJournal/static/js/main.9d67830f.chunk.js",
-    "main.js.map": "/OnlineJournal/static/js/main.9d67830f.chunk.js.map",
+    "main.js": "/OnlineJournal/static/js/main.f01bb55f.chunk.js",
+    "main.js.map": "/OnlineJournal/static/js/main.f01bb55f.chunk.js.map",
     "runtime-main.js": "/OnlineJournal/static/js/runtime-main.cdf9cd58.js",
     "runtime-main.js.map": "/OnlineJournal/static/js/runtime-main.cdf9cd58.js.map",
     "static/css/2.45482f6c.chunk.css": "/OnlineJournal/static/css/2.45482f6c.chunk.css",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.cdf9cd58.js",
     "static/css/2.45482f6c.chunk.css",
     "static/js/2.e2c924ea.chunk.js",
-    "static/js/main.9d67830f.chunk.js"
+    "static/js/main.f01bb55f.chunk.js"
   ]
 }
