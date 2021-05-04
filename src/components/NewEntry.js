@@ -36,6 +36,7 @@ export default function NewEntry(props) {
   const username = userContext.user;
   const classes = useStyles();
   var date = location.search.slice(1);
+  const { rootRoute } = props;
 
   var displayDate;
   try {
@@ -82,7 +83,7 @@ export default function NewEntry(props) {
           <h1>
             {displayDate}
             <span style={{ fontSize: "1.2rem" }}>
-              <Link to="/Calendar"> pick a different date</Link>
+              <Link to={`${rootRoute}/Calendar`}> pick a different date</Link>
             </span>
           </h1>
           <h3>Create a new Entry</h3>

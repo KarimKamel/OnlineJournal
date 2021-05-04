@@ -57,6 +57,7 @@ export default function Entries(props) {
   const [loading, setLoading] = useState(false);
   var date = location.search.slice(1);
   var displayDate;
+  const { rootRoute } = props;
 
   try {
     console.log("date received as: " + date);
@@ -107,7 +108,7 @@ export default function Entries(props) {
         </h1>
         <Link
           to={{
-            pathname: `/entries/create-entry`,
+            pathname: `${rootRoute}/entries/create-entry`,
             new: true,
             search: date,
           }}
@@ -136,7 +137,7 @@ export default function Entries(props) {
                   variant="dark"
                   onClick={() => {
                     history.push({
-                      pathname: `/entries/display-entry`,
+                      pathname: `${rootRoute}/entries/display-entry`,
                       entry: entry,
                       search: `${entry._id}`,
                       // search: `testentry`,

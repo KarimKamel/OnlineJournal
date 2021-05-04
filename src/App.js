@@ -1,11 +1,10 @@
-import React from "react";
-import { BrowserRouter, Redirect, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 import Middleware from "./components/Middleware";
 import Signup from "./components/Signup";
 import Home from "./components/Home";
 import Signin from "./components/Signin";
-import Signout from "./components/Signout";
 import Profile from "./components/Profile";
 import NavComp from "./components/NavComp";
 import Journal from "./components/Journal";
@@ -16,6 +15,7 @@ import { makeStyles } from "@material-ui/styles";
 import AllEntries from "./components/AllEntries";
 import NewEntry from "./components/NewEntry";
 import DisplayEntry from "./components/DisplayEntry";
+import FourOFour from "./components/FourOFour";
 
 const useStyles = makeStyles({
   loadingContainer: {
@@ -31,11 +31,13 @@ export default function App() {
   const userContext = useUserContext();
   const classes = useStyles();
 
+  const rootRoute = "/OnlineJournal";
+
   return (
-    <BrowserRouter>
+    <div>
+      {console.log(rootRoute)}
       {console.log(process.env.NODE_ENV)}
       {console.log("#####################")}
-
       {console.log("rendering APP")}
       <Middleware />
       <div>
@@ -47,100 +49,105 @@ export default function App() {
         ) : (
           <div>
             {console.log("remove loading")}
-            <NavComp />
+            <NavComp rootRoute={rootRoute} />
+            <Switch>
+              <Route exact path={`${rootRoute}/`}>
+                <Home />
+              </Route>
 
-            <Route exact path="/">
-              <Home />
-            </Route>
-
-            {/* <PrivateRoute path="/signin">
+              {/* <PrivateRoute path="/signin">
               <Signin />
             </PrivateRoute> */}
-            <Route path="/signin">
-              {!userContext.user ? (
-                <Signin />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/",
-                  }}
-                />
-              )}
-            </Route>
+              <Route path={`${rootRoute}/signin`}>
+                {console.log(`${rootRoute}/signin`)}
+                {!userContext.user ? (
+                  <Signin />
+                ) : (
+                  <Redirect
+                    to={{
+                      pathname: `${rootRoute}/`,
+                    }}
+                  />
+                )}
+              </Route>
 
-            <Route path="/profile">
-              {userContext.user ? (
-                <Profile />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/",
-                  }}
-                />
-              )}
-            </Route>
-            <Route path="/signup">
-              {!userContext.user ? (
-                <Signup />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/profile",
-                  }}
-                />
-              )}
-            </Route>
-            <Route path="/allentries">
-              {userContext.user ? (
-                <AllEntries />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/signin",
-                  }}
-                />
-              )}
-            </Route>
-            <Route path="/Calendar">
-              <Calendar />
-            </Route>
-            <Route path="/journal">
-              {userContext.user ? (
-                <Journal />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/",
-                  }}
-                />
-              )}
-            </Route>
-            <Route path="/entries/create-entry">
-              {userContext.user ? (
-                <NewEntry />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/",
-                  }}
-                />
-              )}
-            </Route>
-            <Route path="/entries/display-entry">
-              {userContext.user ? (
-                <DisplayEntry />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/",
-                  }}
-                />
-              )}
-            </Route>
+              <Route path={`${rootRoute}/profile`}>
+                {userContext.user ? (
+                  <Profile />
+                ) : (
+                  <Redirect
+                    to={{
+                      pathname: `${rootRoute}/`,
+                    }}
+                  />
+                )}
+              </Route>
+              <Route path={`${rootRoute}/signup`}>
+                {!userContext.user ? (
+                  <Signup />
+                ) : (
+                  <Redirect
+                    to={{
+                      pathname: `${rootRoute}/profile`,
+                    }}
+                  />
+                )}
+              </Route>
+              <Route path={`${rootRoute}/allentries`}>
+                {userContext.user ? (
+                  <AllEntries />
+                ) : (
+                  <Redirect
+                    to={{
+                      pathname: `${rootRoute}/signin`,
+                    }}
+                  />
+                )}
+              </Route>
+              <Route path={`${rootRoute}/calendar`}>
+                <Calendar />
+              </Route>
+              <Route path={`${rootRoute}/journal`}>
+                {userContext.user ? (
+                  <Journal />
+                ) : (
+                  <Redirect
+                    to={{
+                      pathname: `${rootRoute}/`,
+                    }}
+                  />
+                )}
+              </Route>
+              <Route path={`${rootRoute}/entries/create-entry`}>
+                {userContext.user ? (
+                  <NewEntry />
+                ) : (
+                  <Redirect
+                    to={{
+                      pathname: `${rootRoute}/`,
+                    }}
+                  />
+                )}
+              </Route>
+              <Route path={`${rootRoute}/entries/display-entry`}>
+                {userContext.user ? (
+                  <DisplayEntry />
+                ) : (
+                  <Redirect
+                    to={{
+                      pathname: `${rootRoute}/`,
+                    }}
+                  />
+                )}
+              </Route>
+              <Route>
+                <FourOFour />
+              </Route>
+            </Switch>
           </div>
         )}
       </div>
-    </BrowserRouter>
+    </div>
   );
 }
 function PrivateRoute({ children, ...rest }) {

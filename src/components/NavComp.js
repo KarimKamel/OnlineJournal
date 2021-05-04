@@ -8,6 +8,7 @@ import { Navbar, Nav } from "react-bootstrap";
 export default function NavComp(props) {
   const classes = useStyles();
   const userContext = useUserContext();
+  const { rootRoute } = props;
   useEffect(() => {
     console.log("useeffect Navbar");
   }, [userContext.user]);
@@ -22,22 +23,22 @@ export default function NavComp(props) {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Link className="nav-link" to="/">
+          <Link className="nav-link" to={`${rootRoute}/`}>
             Home
           </Link>
 
           {userContext.user ? (
             <>
-              <Link className="nav-link" to="/Calendar">
+              <Link className="nav-link" to={`${rootRoute}/calendar`}>
                 Calendar
               </Link>
-              <Link className="nav-link" to="/journal">
+              <Link className="nav-link" to={`${rootRoute}/journal`}>
                 Journal
               </Link>
-              <Link className="nav-link" to="/allentries">
+              <Link className="nav-link" to={`${rootRoute}/allentries`}>
                 All Entries
               </Link>
-              <Link className="nav-link" to="/profile">
+              <Link className="nav-link" to={`${rootRoute}/profile`}>
                 Profile
               </Link>
               {/* <Link className="nav-link" to="/signout">
@@ -52,10 +53,10 @@ export default function NavComp(props) {
             </>
           ) : (
             <>
-              <Link className="nav-link" to="/signin">
+              <Link className="nav-link" to={`${rootRoute}/signin`}>
                 Signin
               </Link>
-              <Link className="nav-link" to="/signup">
+              <Link className="nav-link" to={`${rootRoute}/signup`}>
                 Signup
               </Link>
             </>

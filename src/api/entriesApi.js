@@ -1,4 +1,4 @@
-import serverUrl from "./config";
+import { serverUrl } from "..config";
 
 async function saveEntry(data, date, title, username) {
   const entryData = { data, date, title, username };

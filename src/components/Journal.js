@@ -2,6 +2,7 @@ import { Container, ListGroup, Col, Row } from "react-bootstrap";
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 import journalImg from "../img/stockJournal.png";
+import { useRouteMatch, useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles({
   title: {
@@ -25,8 +26,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Home() {
+export default function Journal(props) {
   const classes = useStyles();
+  const { ...routeMatchesRet } = useRouteMatch();
+  const { ...historyRet } = useHistory();
+  const { ...locationRet } = useLocation();
+  const { rootRoute } = props;
 
   // if (userContext.userState) {
   //   console.log(userContext.userState);
@@ -45,14 +50,16 @@ export default function Home() {
         <Col xs={6}>
           <ListGroup>
             <ListGroup.Item>
-              <Link to="/allentries">Browse All Entries</Link>
+              <Link to={`${rootRoute}/allentries`}>Browse All Entries</Link>
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <Link to="/Calendar">Browse Entries By Date</Link>
+              <Link to={`${rootRoute}/Calendar`}>Browse Entries By Date</Link>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Link to="/Entries/create-entry">create a new Entry</Link>
+              <Link to={`${rootRoute}/Entries/create-entry`}>
+                create a new Entry
+              </Link>
             </ListGroup.Item>
           </ListGroup>
         </Col>
