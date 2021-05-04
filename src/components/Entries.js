@@ -1,13 +1,6 @@
 import React, { useState, useLayoutEffect } from "react";
 import dateFormat from "dateformat";
-import {
-  Link,
-  useHistory,
-  useRouteMatch,
-  Switch,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { Link, useHistory, useRouteMatch, useLocation } from "react-router-dom";
 import DisplayEntry from "./DisplayEntry";
 import NewEntry from "./NewEntry";
 import { useUserContext } from "../context/UserContext";

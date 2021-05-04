@@ -141,7 +141,8 @@ export default function Signin(props) {
       <div className={classes.buttonContainer}>
         <GoogleLogin
           // clientId="507566462397-llnfhqvlk2g21hsviv4jditq01i9f860.apps.googleusercontent.com"
-          clientId="507566462397-vdp1f4lpqml8a4fppi7h5d1sg4fm72h0.apps.googleusercontent.com" //production
+          // clientId="507566462397-vdp1f4lpqml8a4fppi7h5d1sg4fm72h0.apps.googleusercontent.com" //production
+          clientId="507566462397-7qgm46k6a0g50bj4s21go3nuibfs024a.apps.googleusercontent.com" //ghpages
           className={classes.googleButton}
           buttonText="Login"
           onSuccess={responseGoogle}
