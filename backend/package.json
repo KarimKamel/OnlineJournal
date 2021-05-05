@@ -1,0 +1,37 @@
+{
+  "name": "react-router-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix try1/",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "deploy": "git add . && git commit -m 'pre-deploy' && git push heroku master"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bootstrap": "^4.6.0",
+    "connect-ensure-login": "^0.1.1",
+    "connect-mongo": "^4.4.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dateformat": "^4.5.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "jss": "^10.6.0",
+    "mongoose": "^5.12.3",
+    "mongoose-sequence": "^5.3.1",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-google-token": "^0.1.2",
+    "react-google-login": "^5.2.2",
+    "react-promise-tracker": "^2.1.0"
+  }
+}
