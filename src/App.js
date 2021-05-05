@@ -36,21 +36,18 @@ export default function App(props) {
 
   return (
     <div>
-      {console.log(rootRoute)}
+      {console.log("rendering APP")}
       {console.log(process.env.NODE_ENV)}
       {console.log("#####################")}
-      {console.log("rendering APP")}
 
       <Middleware />
       <div>
         {userContext.loading ? (
           <div className={classes.loadingContainer}>
-            {console.log("display loading")}
             <h1 className={classes.loadingText}>Loading...</h1>
           </div>
         ) : (
           <div>
-            {console.log("remove loading")}
             <NavComp rootRoute={rootRoute} />
             <Switch>
               <Route exact path={`${rootRoute}/`}>
@@ -58,7 +55,6 @@ export default function App(props) {
               </Route>
 
               <Route path={`${rootRoute}/signin`}>
-                {console.log(`${rootRoute}/signin`)}
                 {!userContext.user ? (
                   <Signin />
                 ) : (
