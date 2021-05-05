@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import { useUserContext } from "../context/UserContext";
 
 export default function Middleware({ props }) {
@@ -10,9 +10,11 @@ export default function Middleware({ props }) {
   useLayoutEffect(() => {
     async function checkTokenValidity() {
       userContext.setLoading(true);
+      console.log("loading state true");
 
       await userContext.userCheckAndRefreshAuth();
       userContext.setLoading(false);
+      console.log("loading state false");
     }
     checkTokenValidity();
   }, [location.pathname]);

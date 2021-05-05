@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 import Middleware from "./components/Middleware";
@@ -8,6 +8,7 @@ import Signin from "./components/Signin";
 import Profile from "./components/Profile";
 import NavComp from "./components/NavComp";
 import Journal from "./components/Journal";
+import Tracer from "./components/Tracer";
 
 import Calendar from "./components/Calendar";
 import { useUserContext } from "./context/UserContext";
@@ -27,7 +28,7 @@ const useStyles = makeStyles({
     },
   },
 });
-export default function App() {
+export default function App(props) {
   const userContext = useUserContext();
   const classes = useStyles();
 
@@ -39,6 +40,7 @@ export default function App() {
       {console.log(process.env.NODE_ENV)}
       {console.log("#####################")}
       {console.log("rendering APP")}
+
       <Middleware />
       <div>
         {userContext.loading ? (
@@ -52,12 +54,9 @@ export default function App() {
             <NavComp rootRoute={rootRoute} />
             <Switch>
               <Route exact path={`${rootRoute}/`}>
-                <Home />
+                <Home rootRoute={rootRoute} />
               </Route>
 
-              {/* <PrivateRoute path="/signin">
-              <Signin />
-            </PrivateRoute> */}
               <Route path={`${rootRoute}/signin`}>
                 {console.log(`${rootRoute}/signin`)}
                 {!userContext.user ? (

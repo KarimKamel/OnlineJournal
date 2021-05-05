@@ -2,7 +2,6 @@ import { Container, ListGroup, Col, Row } from "react-bootstrap";
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 import journalImg from "../img/stockJournal.png";
-import { useRouteMatch, useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles({
   title: {
@@ -28,9 +27,7 @@ const useStyles = makeStyles({
 
 export default function Journal(props) {
   const classes = useStyles();
-  const { ...routeMatchesRet } = useRouteMatch();
-  const { ...historyRet } = useHistory();
-  const { ...locationRet } = useLocation();
+
   const { rootRoute } = props;
 
   // if (userContext.userState) {

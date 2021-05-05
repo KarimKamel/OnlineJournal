@@ -133,12 +133,7 @@ export default function Signin(props) {
 
         <h1 className={classes.dividerText}>Or</h1>
       </div>
-      {/* <div className={classes.buttonContainer}>
-        <button onClick={handleClick} className={classes.googleButton}>
-          <i class="fab fa-google mr-2"></i>
-          <span>connect with google</span>
-        </button>
-      </div> */}
+
       <div className={classes.buttonContainer}>
         <GoogleLogin
           clientId={googleClientId}

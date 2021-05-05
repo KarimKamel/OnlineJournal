@@ -1,8 +1,7 @@
-import { useHistory } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import { makeStyles } from "@material-ui/styles";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
 
 const useStyles = makeStyles({
@@ -48,11 +47,13 @@ export default function Profile(props) {
       console.log(data);
       const { name, email, hobbies } = data;
       console.log(name, email, hobbies);
-      setDetails({ name, email, hobbies });
+      if (name) setDetails({ name, email, hobbies });
+
+      console.log("done");
       setLoading(false);
     }
     userGetDetailsWrapper();
-  }, [user]);
+  }, [user, userGetDetails]);
 
   function onChange(event) {
     setDetails((prev) => ({
@@ -70,6 +71,7 @@ export default function Profile(props) {
 
   return (
     <Container>
+      {console.log("render profile")}
       {loading ? (
         <div className={classes.spinnerContainer}>
           {" "}
@@ -89,6 +91,7 @@ export default function Profile(props) {
                 onChange={onChange}
                 name="email"
                 value={details.email}
+                // value={emailData}
                 type="email"
               />
             </Col>
@@ -102,6 +105,7 @@ export default function Profile(props) {
                 onChange={onChange}
                 name="name"
                 value={details.name}
+                // value={nameData}
                 type="text"
               />
             </Col>
@@ -117,6 +121,7 @@ export default function Profile(props) {
                 onChange={onChange}
                 name="hobbies"
                 value={details.hobbies}
+                // value={hobbiesData}
                 as="textarea"
                 rows={3}
               />

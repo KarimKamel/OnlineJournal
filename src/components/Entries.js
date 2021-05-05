@@ -1,8 +1,7 @@
 import React, { useState, useLayoutEffect } from "react";
 import dateFormat from "dateformat";
 import { Link, useHistory, useRouteMatch, useLocation } from "react-router-dom";
-import DisplayEntry from "./DisplayEntry";
-import NewEntry from "./NewEntry";
+
 import { useUserContext } from "../context/UserContext";
 import { getEntries } from "../api/entriesApi";
 import { Card, Button, Container, Spinner } from "react-bootstrap";
@@ -51,7 +50,7 @@ function strip(html) {
 }
 
 export default function Entries(props) {
-  const { path, url, isExact } = useRouteMatch();
+  const { isExact } = useRouteMatch();
   const history = useHistory();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
@@ -68,8 +67,6 @@ export default function Entries(props) {
   } catch (err) {
     console.log("date format incorrect");
   }
-
-  // const { date } = location.date;
 
   const userContext = useUserContext();
   const [entries, setEntries] = useState([]);

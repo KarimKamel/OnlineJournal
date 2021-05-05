@@ -8,7 +8,6 @@ import {
   getDetails,
 } from "../api/authApi";
 import { useState } from "react";
-import { trackPromise } from "react-promise-tracker";
 
 export default function useUserProvider() {
   const [user, setUser] = useState("");
@@ -94,16 +93,22 @@ export default function useUserProvider() {
   async function userCheckAndRefreshAuth() {
     const username = await checkAndRefreshAuth();
     console.log("check and refresh returned: " + username);
-    if (username) {
-      setUser(username);
-      console.log("setting user in context" + username);
-    } else {
+    // if (username) {
+    //   setUser(username);
+    //   console.log("setting user in context" + username);
+    // } else {
+    //   setUser("");
+    //   console.log("removing user from context");
+    // }
+    // return;
+    if (!username) {
       setUser("");
       console.log("removing user from context");
+    } else if (username !== user) {
+      setUser(username);
+      console.log("putting user in context");
     }
     return;
-    // console.log("setting loading to false");
-    // setLoading(false);
   }
 
   return {

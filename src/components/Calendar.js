@@ -28,8 +28,7 @@ const useStyles = makeStyles({
 
 export default function Calendar() {
   const [date, onDateChange] = useState(new Date());
-  const { path, url } = useRouteMatch();
-  const location = useLocation();
+  const { path } = useRouteMatch();
   const history = useHistory();
   // const path = location.pathname;
   const classes = useStyles();

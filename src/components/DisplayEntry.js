@@ -3,14 +3,9 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { useLocation, useHistory } from "react-router";
-import { Card, Button, Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { makeStyles } from "@material-ui/styles";
-import {
-  getEntry,
-  updateEntry,
-  saveEntry,
-  deleteEntry,
-} from "../api/entriesApi";
+import { getEntry, updateEntry, deleteEntry } from "../api/entriesApi";
 const useStyles = makeStyles({
   root: {
     paddingTop: "2rem",

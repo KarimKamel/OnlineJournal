@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useUserContext } from "../context/UserContext";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import { Form, Button, Container, Spinner } from "react-bootstrap";
 import passwordValidator from "password-validator";
+import { GoogleLogin } from "react-google-login";
+import { googleClientId } from "../config";
 
 const useStyles = makeStyles({
   root: {},
@@ -19,6 +20,32 @@ const useStyles = makeStyles({
   spinner: {
     width: "5rem",
     height: "5rem",
+  },
+  dividerContainer: {
+    marginTop: "4rem",
+  },
+  dividerText: {
+    marginTop: "-45px",
+    border: "2px solid black",
+    display: "inline-block",
+    borderRadius: "50%",
+    background: "white",
+    padding: "1rem",
+    marginLeft: "50%",
+    transform: "translate(-50%,-20%)",
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "4rem",
+  },
+  googleButton: {
+    width: "80%",
+    background: "red !important",
+    color: "white",
+    padding: "1rem",
+    border: "0px",
+    boxShadow: "2px 3px 5px black",
   },
 });
 
@@ -93,6 +120,16 @@ export default function Signup(props) {
 
     return schema.validate(password, { list: true });
   }
+  async function responseGoogle(response) {
+    try {
+      console.log(response);
+      // console.log(response.tokenObj["access_token"]);
+      const accessTokenObj = { access_token: response.tokenObj.access_token };
+      userContext.userGoogleSignIn(accessTokenObj);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Container>
@@ -104,52 +141,70 @@ export default function Signup(props) {
           </Spinner>
         </div>
       ) : (
-        <Form className={classes.form} onSubmit={handleSubmit}>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>username</Form.Label>
-            <Form.Control
-              value={formFields.username}
-              onChange={handleChange}
-              name="username"
-              type="text"
-              placeholder="Enter email"
-            />
-          </Form.Group>
+        <div>
+          <Form className={classes.form} onSubmit={handleSubmit}>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>username</Form.Label>
+              <Form.Control
+                value={formFields.username}
+                onChange={handleChange}
+                name="username"
+                type="text"
+                placeholder="Enter email"
+              />
+            </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>password</Form.Label>
-            <Form.Control
-              value={formFields.password}
-              onChange={handleChange}
-              name="password"
-              type="password"
-              placeholder="password"
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>repeat password</Form.Label>
-            <Form.Control
-              value={formFields.password}
-              onChange={handleChange}
-              name="password"
-              type="password"
-              placeholder="password"
-            />
-          </Form.Group>
-          {errorMessage.status && (
-            <div>
-              {errorMessage.errorMessageList.map((err) => (
-                <p key={err} className={classes.errorMessage}>
-                  {err}
-                </p>
-              ))}
-            </div>
-          )}
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>password</Form.Label>
+              <Form.Control
+                value={formFields.password}
+                onChange={handleChange}
+                name="password"
+                type="password"
+                placeholder="password"
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>repeat password</Form.Label>
+              <Form.Control
+                value={formFields.password}
+                onChange={handleChange}
+                name="password"
+                type="password"
+                placeholder="password"
+              />
+            </Form.Group>
+            {errorMessage.status && (
+              <div>
+                {errorMessage.errorMessageList.map((err) => (
+                  <p key={err} className={classes.errorMessage}>
+                    {err}
+                  </p>
+                ))}
+              </div>
+            )}
 
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+          <div className={classes.dividerContainer}>
+            <hr></hr>
+
+            <h1 className={classes.dividerText}>Or</h1>
+          </div>
+
+          <div className={classes.buttonContainer}>
+            <GoogleLogin
+              clientId={googleClientId}
+              className={classes.googleButton}
+              buttonText="Login"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={"single_host_origin"}
+            />
+          </div>
+        </div>
       )}
     </Container>
   );

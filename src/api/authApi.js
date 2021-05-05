@@ -1,4 +1,4 @@
-import { serverUrl } from "..config";
+import { serverUrl } from "../config";
 
 async function checkAuth() {
   var formedUrl = `${serverUrl}users/auth`;

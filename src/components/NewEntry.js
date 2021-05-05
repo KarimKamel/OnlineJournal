@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Editor from "./Editor";
 import { useUserContext } from "../context/UserContext";
 import dateFormat from "dateformat";
 import { useLocation, useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { Card, Button, Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { makeStyles } from "@material-ui/styles";
-import { getEntry, updateEntry, saveEntry } from "../api/entriesApi";
+import { saveEntry } from "../api/entriesApi";
 
 const useStyles = makeStyles({
   root: {
