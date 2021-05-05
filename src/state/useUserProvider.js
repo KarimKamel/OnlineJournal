@@ -41,9 +41,11 @@ export default function useUserProvider() {
     const res = await getDetails(username);
     if (res.status === 200) {
       const data = await res.json();
-      console.log(data);
       return data;
-    } else return false;
+    } else {
+      console.log("error retrieving user data. err code", res.status);
+      return false;
+    }
   }
 
   async function userSignUp(username, password) {

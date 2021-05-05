@@ -25,5 +25,7 @@ yarn-error.log*
 
 # my addition
 .vscode
+todo.txt
+.env
 
 

@@ -8,13 +8,14 @@ import UserProvider from "./context/UserProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
-  // <React.StrictMode>
-  <BrowserRouter>
-    <UserProvider>
-      <App />
-    </UserProvider>
-  </BrowserRouter>,
-  // </React.StrictMode>,
+  <React.StrictMode>
+    <BrowserRouter>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </BrowserRouter>
+    ,
+  </React.StrictMode>,
   document.getElementById("root")
 );
 

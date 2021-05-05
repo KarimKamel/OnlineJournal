@@ -145,8 +145,8 @@ export default function AllEntries() {
             add a new journal entry
           </Button>
           {entriesByDate.length > 0 ? (
-            entriesByDate.map((obj) => (
-              <div>
+            entriesByDate.map((obj, idx) => (
+              <div key={idx}>
                 <div className={classes.dateContainer}>
                   <h2>
                     {dateFormat(new Date(obj.date), "dddd, mmmm dS, yyyy")}

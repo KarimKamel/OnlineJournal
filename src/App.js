@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 import Middleware from "./components/Middleware";
 import Signup from "./components/Signup";
@@ -31,7 +31,6 @@ const useStyles = makeStyles({
 export default function App(props) {
   const userContext = useUserContext();
   const classes = useStyles();
-
   const rootRoute = "/OnlineJournal";
 
   return (

@@ -1,7 +1,7 @@
 import { useUserContext } from "../context/UserContext";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 import { makeStyles } from "@material-ui/styles";
-import { useLayoutEffect, useState, useEffect } from "react";
+import { useLayoutEffect, useState, useEffect, useRef } from "react";
 import { Spinner } from "react-bootstrap";
 
 const useStyles = makeStyles({
@@ -30,8 +30,10 @@ const useStyles = makeStyles({
 });
 
 export default function Profile(props) {
+  const mounted = useRef(false); //useRef to be able to check if component is mounted. useRef is used instead of regular variable because regular variable state does not persist if modified in useEffect
   const userContext = useUserContext();
   const { user, userGetDetails, userUpdateDetails } = userContext;
+
   const [details, setDetails] = useState({
     name: "",
     email: "",
@@ -42,18 +44,24 @@ export default function Profile(props) {
 
   useLayoutEffect(() => {
     async function userGetDetailsWrapper() {
-      setLoading(true);
-      const data = await userGetDetails(user);
-      console.log(data);
-      const { name, email, hobbies } = data;
-      console.log(name, email, hobbies);
-      if (name) setDetails({ name, email, hobbies });
+      if (mounted.current === true) {
+        setLoading(true);
 
-      console.log("done");
-      setLoading(false);
+        const data = await userGetDetails(user);
+        const { name, email, hobbies } = data;
+        if (mounted.current === true) {
+          setDetails({ name, email, hobbies });
+          setLoading(false);
+        }
+      }
     }
+    mounted.current = true;
     userGetDetailsWrapper();
-  }, [user, userGetDetails]);
+    return () => {
+      console.log("setting ref to false");
+      mounted.current = false;
+    };
+  }, []);
 
   function onChange(event) {
     setDetails((prev) => ({
