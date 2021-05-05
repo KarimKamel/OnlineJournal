@@ -1,1 +1,0 @@
-const myconst = 1;
