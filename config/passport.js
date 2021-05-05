@@ -35,6 +35,9 @@ function passportConfig(passport) {
           const newUser = new User({
             username: username,
             googleId: googleId,
+            email: "",
+            hobbies: "",
+            name: "",
           });
 
           newUser.save((err, user) => {

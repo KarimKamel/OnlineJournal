@@ -3,7 +3,7 @@ var router = express.Router();
 var User = require("../models/User");
 var bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
-const accessTokenExpiry = "10s";
+const accessTokenExpiry = "10m";
 const saltRounds = 10;
 const passport = require("passport");
 
@@ -76,6 +76,9 @@ router.post("/signup", async (req, res) => {
   const newUser = new User({
     username: user.username,
     password: passwordHash,
+    email: "",
+    hobbies: "",
+    name: "",
   });
 
   try {
