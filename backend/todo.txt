@@ -1,2 +1,0 @@
-server users api: change signup route to standard rest api root route
-rename client auth api
