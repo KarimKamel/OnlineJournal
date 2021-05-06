@@ -49,6 +49,7 @@ export default function Profile(props) {
 
         const data = await userGetDetails(user);
         const { name, email, hobbies } = data;
+        //check mounted again since it might have changed during await userGetDetails
         if (mounted.current === true) {
           setDetails({ name, email, hobbies });
           setLoading(false);
@@ -56,6 +57,7 @@ export default function Profile(props) {
       }
     }
     mounted.current = true;
+    console.log("mounted profile");
     userGetDetailsWrapper();
     return () => {
       console.log("setting ref to false");

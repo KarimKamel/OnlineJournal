@@ -8,7 +8,6 @@ import Signin from "./components/Signin";
 import Profile from "./components/Profile";
 import NavComp from "./components/NavComp";
 import Journal from "./components/Journal";
-import Tracer from "./components/Tracer";
 
 import Calendar from "./components/Calendar";
 import { useUserContext } from "./context/UserContext";
@@ -38,7 +37,6 @@ export default function App(props) {
       {console.log("rendering APP")}
       {console.log(process.env.NODE_ENV)}
       {console.log("#####################")}
-
       <Middleware />
       <div>
         {userContext.loading ? (
