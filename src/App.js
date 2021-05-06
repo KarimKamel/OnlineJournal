@@ -16,17 +16,8 @@ import AllEntries from "./components/AllEntries";
 import NewEntry from "./components/NewEntry";
 import DisplayEntry from "./components/DisplayEntry";
 import FourOFour from "./components/FourOFour";
+import useStyles from "./styles/appStyles";
 
-const useStyles = makeStyles({
-  loadingContainer: {
-    display: "flex",
-    justifyContent: "center",
-
-    "& h1": {
-      paddingTop: "2rem",
-    },
-  },
-});
 export default function App(props) {
   const userContext = useUserContext();
   const classes = useStyles();
@@ -47,6 +38,13 @@ export default function App(props) {
           <div>
             <NavComp rootRoute={rootRoute} />
             <Switch>
+              <Route exact path={`/`}>
+                <Redirect
+                  to={{
+                    pathname: `${rootRoute}/`,
+                  }}
+                />
+              </Route>
               <Route exact path={`${rootRoute}/`}>
                 <Home rootRoute={rootRoute} />
               </Route>
@@ -140,25 +138,5 @@ export default function App(props) {
         )}
       </div>
     </div>
-  );
-}
-function PrivateRoute({ children, ...rest }) {
-  let auth = useUserContext();
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        !auth.user ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/profile",
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
   );
 }

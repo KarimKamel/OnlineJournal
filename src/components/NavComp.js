@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/styles";
 
 import { useEffect } from "react";
 import { useUserContext } from "../context/UserContext";
 import { Navbar, Nav } from "react-bootstrap";
+import useStyles from "../styles/navCompStyles";
 
 export default function NavComp(props) {
   const classes = useStyles();
@@ -66,28 +66,3 @@ export default function NavComp(props) {
     </Navbar>
   );
 }
-
-const useStyles = makeStyles({
-  root: {
-    background: "purple",
-
-    padding: "10px",
-  },
-  item: {
-    fontSize: "2rem",
-    marginRight: "1rem",
-    color: "white",
-    textDecoration: "none",
-    // "&:first-child": {
-    //   marginLeft: "1rem",
-    // },
-
-    "&:hover": {
-      color: "black",
-    },
-  },
-  signoutButton: {
-    borderStyle: "none",
-    backgroundColor: "inherit",
-  },
-});

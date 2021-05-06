@@ -15,10 +15,9 @@ export default function Middleware({ props }) {
       console.log("user currently set to: " + userContext.user);
 
       await userContext.userCheckAndRefreshAuth();
-      console.log("returned from  check and refresh");
-      console.log("upon return user currently set to: " + userContext.user);
+      console.log("returned from  check and refresh, disabling loading");
+
       userContext.setLoading(false);
-      console.log("loading state false");
     }
 
     checkTokenValidity();

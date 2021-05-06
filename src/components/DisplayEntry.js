@@ -37,6 +37,7 @@ export default function DisplayEntry(props) {
     }
 
     if (!entry || !data) {
+      //upon page refreshing entry won't be passed in location object
       getEntryWrapper();
     }
   }, []);

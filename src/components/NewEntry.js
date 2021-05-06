@@ -5,26 +5,8 @@ import dateFormat from "dateformat";
 import { useLocation, useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
-import { makeStyles } from "@material-ui/styles";
 import { saveEntry } from "../api/entriesApi";
-
-const useStyles = makeStyles({
-  root: {
-    paddingTop: "2rem",
-  },
-  inputLabel: {
-    fontSize: "2rem",
-    marginTop: "2rem",
-    display: "block",
-  },
-  inputTitle: {
-    width: "100%",
-    marginBottom: "2rem",
-  },
-  message: {
-    textAlign: "center",
-  },
-});
+import useStyles from "../styles/newEntryStyles";
 
 export default function NewEntry(props) {
   const location = useLocation();

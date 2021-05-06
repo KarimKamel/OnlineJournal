@@ -1,36 +1,10 @@
 import { useUserContext } from "../context/UserContext";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
-import { makeStyles } from "@material-ui/styles";
-import { useLayoutEffect, useState, useEffect, useRef } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
-
-const useStyles = makeStyles({
-  title: {
-    padding: "2rem",
-    textAlign: "center",
-  },
-  row: {
-    marginBottom: "1rem",
-  },
-  label: {
-    verticalAlign: "middle",
-    marginBottom: "0",
-    fontWeight: "bold",
-  },
-  spinnerContainer: {
-    display: "flex",
-    paddingTop: "20vh",
-    justifyContent: "center",
-  },
-  spinner: {
-    width: "5rem",
-    height: "5rem",
-  },
-  button: { display: "block", marginLeft: "auto" },
-});
+import useStyles from "../styles/profileStyles";
 
 export default function Profile(props) {
-  const mounted = useRef(false); //useRef to be able to check if component is mounted. useRef is used instead of regular variable because regular variable state does not persist if modified in useEffect
   const userContext = useUserContext();
   const { user, userGetDetails, userUpdateDetails } = userContext;
 
@@ -44,24 +18,19 @@ export default function Profile(props) {
 
   useLayoutEffect(() => {
     async function userGetDetailsWrapper() {
-      if (mounted.current === true) {
-        setLoading(true);
-
-        const data = await userGetDetails(user);
-        const { name, email, hobbies } = data;
-        //check mounted again since it might have changed during await userGetDetails
-        if (mounted.current === true) {
-          setDetails({ name, email, hobbies });
-          setLoading(false);
-        }
+      setLoading(true);
+      const data = await userGetDetails(user);
+      const { name, email, hobbies } = data;
+      if (mounted) {
+        setDetails({ name, email, hobbies });
+        setLoading(false);
       }
     }
-    mounted.current = true;
+    let mounted = true;
     console.log("mounted profile");
     userGetDetailsWrapper();
     return () => {
-      console.log("setting ref to false");
-      mounted.current = false;
+      mounted = false;
     };
   }, []);
 

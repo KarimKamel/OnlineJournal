@@ -2,7 +2,6 @@ import React, { useState, useLayoutEffect } from "react";
 import { getEntries, getNumberOfEntries } from "../api/entriesApi";
 import { useUserContext } from "../context/UserContext";
 import { Card, Spinner, Container, Button } from "react-bootstrap";
-import { makeStyles } from "@material-ui/styles";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import dateFormat from "dateformat";
 import PaginationComponent from "./PaginationComponent";
@@ -14,7 +13,6 @@ export default function AllEntries(props) {
   const [loading, setLoading] = useState(false);
   const userContext = useUserContext();
   const classes = useStyles();
-  const { path } = useRouteMatch();
   const history = useHistory();
   const [numberOfEntries, setNumberOfEntries] = useState(0);
   const [activePage, setActivePage] = useState(1);

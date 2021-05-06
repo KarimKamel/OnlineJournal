@@ -1,56 +1,14 @@
 import React, { useState, useLayoutEffect } from "react";
 import dateFormat from "dateformat";
-import { Link, useHistory, useRouteMatch, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import { useUserContext } from "../context/UserContext";
 import { getEntries } from "../api/entriesApi";
 import { Card, Button, Container, Spinner } from "react-bootstrap";
-import { makeStyles } from "@material-ui/styles";
-
-const useStyles = makeStyles({
-  headerContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: "2rem",
-  },
-  linkContainer: { textAlign: "end" },
-  card: { marginTop: "2rem" },
-  cardText: {
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  },
-  spinnerContainer: {
-    display: "flex",
-    paddingTop: "20vh",
-    justifyContent: "center",
-  },
-  spinner: {
-    width: "5rem",
-    height: "5rem",
-  },
-
-  noEntriesMessageContainer: {
-    display: "flex",
-    justifyContent: "center",
-    paddingTop: "4rem",
-    border: "2px solid black",
-    marginTop: "6rem",
-    paddingBottom: "4rem",
-    alignItems: "center",
-    background: "lightsteelblue",
-    borderRadius: "5px",
-  },
-});
-
-function strip(html) {
-  let doc = new DOMParser().parseFromString(html, "text/html");
-  return doc.body.textContent || "";
-}
+import useStyles from "../styles/entriesStyles";
+import { strip } from "../utils/utils";
 
 export default function Entries(props) {
-  const { isExact } = useRouteMatch();
   const history = useHistory();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
@@ -59,11 +17,8 @@ export default function Entries(props) {
   const { rootRoute } = props;
 
   try {
-    console.log("date received as: " + date);
     date = decodeURI(date);
-    console.log("date decoded to: " + date);
     displayDate = dateFormat(date, "dddd dd mmmm yyyy");
-    console.log("display date formatted as: " + displayDate);
   } catch (err) {
     console.log("date format incorrect");
   }

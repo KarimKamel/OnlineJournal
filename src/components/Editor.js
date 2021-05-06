@@ -6,10 +6,6 @@ export default function Editor(props) {
   const [editMode] = useState(true);
   const { data, setData } = props;
 
-  useEffect(() => {
-    console.log("useEffect editor with data: " + data);
-  }, [data]);
-
   return (
     <div className="root">
       {console.log("rendering editor with data: " + data)}
