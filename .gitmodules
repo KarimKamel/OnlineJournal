@@ -1,0 +1,4 @@
+[submodule "OnlineJournal"]
+	path = OnlineJournal
+	url = https://github.com/KarimKamel/OnlineJournal.git
+	branch = main
