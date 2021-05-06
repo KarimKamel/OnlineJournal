@@ -4,31 +4,9 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { useLocation, useHistory } from "react-router";
 import { Button, Container } from "react-bootstrap";
-import { makeStyles } from "@material-ui/styles";
+import useStyles from "../styles/displayEntryStyles";
 import { getEntry, updateEntry, deleteEntry } from "../api/entriesApi";
-const useStyles = makeStyles({
-  root: {
-    paddingTop: "2rem",
-  },
-  titleInput: {
-    marginBottom: "2rem",
-    width: "100%",
-  },
-  titleLabel: {
-    fontSize: "2rem",
-  },
-  buttonSave: {
-    marginTop: "2rem",
-    marginRight: "1rem",
-  },
-  message: {
-    textAlign: "center",
-  },
-});
-function strip(html) {
-  let doc = new DOMParser().parseFromString(html, "text/html");
-  return doc.body.textContent || "";
-}
+import { strip } from "../utils/utils";
 
 export default function DisplayEntry(props) {
   const location = useLocation();
@@ -41,19 +19,6 @@ export default function DisplayEntry(props) {
   const [deletMessage, setDeleteMessage] = useState(false);
   const classes = useStyles();
 
-  //   useEffect(() => {
-  //     async function getEntryWrapper() {
-  //       const entryId = location.search.slice(1);
-  //       const res = await getEntry(entryId);
-  //       console.log("entry res " + res);
-  //       setEntry(res);
-  //       setData(res.data);
-  //     }
-  //     if (!entry) {
-  //       console.log("noEntry");
-  //       getEntryWrapper();
-  //     }
-  //   }, []);
   useEffect(() => {
     async function getEntryWrapper() {
       if (!entry) {

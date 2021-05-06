@@ -79,18 +79,18 @@ export default function Entries(props) {
       console.log("retrieving for date: ", date);
       console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
       const entries = await getEntries(userContext.user, date);
-      setLoading(false);
 
-      setEntries(entries);
-    }
-    if (isExact) {
-      console.log("loading entries");
-      try {
-        loadEntries();
-      } catch (err) {
-        console.log(err);
+      if (mounted) {
+        setEntries(entries);
+        setLoading(false);
       }
     }
+    let mounted = true;
+
+    loadEntries();
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   return (

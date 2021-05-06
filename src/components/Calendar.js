@@ -26,18 +26,19 @@ const useStyles = makeStyles({
   button: { border: " 5px solid gray" },
 });
 
-export default function Calendar() {
+export default function Calendar(props) {
   const [date, onDateChange] = useState(new Date());
   const { path } = useRouteMatch();
   const history = useHistory();
   // const path = location.pathname;
   const classes = useStyles();
+  const { rootRoute } = props;
 
   return (
     <Switch>
       {console.log("rendering calendar")}
       <Route path={`${path}/Entries`}>
-        <Entries />
+        <Entries rootRoute={rootRoute} />
       </Route>
       <Route path={`${path}`}>
         <Container>

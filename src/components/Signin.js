@@ -49,8 +49,8 @@ export default function Signin(props) {
   }, [userContext]);
 
   const [formFields, setFormFields] = useState({
-    username: "",
-    password: "",
+    username: "user",
+    password: "pass1234",
     remember: false,
   });
   const handleCheck = (e) => {

@@ -87,7 +87,7 @@ export default function App(props) {
               </Route>
               <Route path={`${rootRoute}/allentries`}>
                 {userContext.user ? (
-                  <AllEntries />
+                  <AllEntries rootRoute={rootRoute} />
                 ) : (
                   <Redirect
                     to={{
@@ -97,7 +97,7 @@ export default function App(props) {
                 )}
               </Route>
               <Route path={`${rootRoute}/calendar`}>
-                <Calendar />
+                <Calendar rootRoute={rootRoute} />
               </Route>
               <Route path={`${rootRoute}/journal`}>
                 {userContext.user ? (

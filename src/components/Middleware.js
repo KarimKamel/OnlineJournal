@@ -19,12 +19,6 @@ export default function Middleware({ props }) {
       console.log("upon return user currently set to: " + userContext.user);
       userContext.setLoading(false);
       console.log("loading state false");
-      {
-        console.log("location in setTokenValidity" + location.pathname);
-      }
-    }
-    {
-      console.log("location useLayoutEffect" + location.pathname);
     }
 
     checkTokenValidity();
